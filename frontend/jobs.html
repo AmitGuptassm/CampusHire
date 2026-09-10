@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Jobs | CampusHire</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 CampusHire
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="about.html">About</a>
+            </li>
+
+            <li>
+                <a href="companies.html">Companies</a>
+            </li>
+
+            <li>
+                <a href="jobs.html">Jobs</a>
+            </li>
+
+            <li>
+                <a href="contact.html">Contact</a>
+            </li>
+
+        </ul>
+
+        <div class="nav-buttons">
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+            <a href="register.html" class="register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         JOB HERO
+    ========================== -->
+
+    <section class="jobs-hero">
+
+        <div class="jobs-hero-content">
+
+            <span class="section-label">
+                FIND YOUR OPPORTUNITY
+            </span>
+
+            <h1>
+                Find Your Next
+                <span>Career Opportunity</span>
+            </h1>
+
+            <p>
+                Explore placement and internship opportunities
+                from leading companies and find a role that
+                matches your skills and career goals.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         SEARCH & FILTER
+    ========================== -->
+
+    <section class="job-search">
+
+        <div class="job-search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search jobs, skills or companies..."
+            >
+
+            <select id="jobTypeFilter">
+
+                <option value="">
+                    Job Type
+                </option>
+
+                <option value="Full Time">
+                    Full Time
+                </option>
+
+                <option value="Internship">
+                    Internship
+                </option>
+
+                <option value="Placement">
+                    Placement
+                </option>
+
+            </select>
+
+
+            <select id="locationFilter">
+
+                <option value="">
+                    Location
+                </option>
+
+                <option value="Delhi">
+                    Delhi
+                </option>
+
+                <option value="Noida">
+                    Noida
+                </option>
+
+                <option value="Bengaluru">
+                    Bengaluru
+                </option>
+
+                <option value="Hyderabad">
+                    Hyderabad
+                </option>
+
+                <option value="Pune">
+                    Pune
+                </option>
+
+                <option value="Gurugram">
+                    Gurugram
+                </option>
+
+                <option value="Chennai">
+                    Chennai
+                </option>
+
+            </select>
+
+
+            <select id="experienceFilter">
+
+                <option value="">
+                    Experience
+                </option>
+
+                <option value="Fresher">
+                    Fresher
+                </option>
+
+                <option value="0-1 Years">
+                    0-1 Years
+                </option>
+
+                <option value="1-2 Years">
+                    1-2 Years
+                </option>
+
+            </select>
+
+
+            <button id="searchButton">
+                Search Jobs
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         JOB SECTION
+    ========================== -->
+
+    <section class="jobs-section">
+
+        <div class="jobs-heading">
+
+            <div>
+
+                <span class="section-label">
+                    LATEST OPPORTUNITIES
+                </span>
+
+                <h2>
+                    Jobs & Placements
+                </h2>
+
+                <p>
+                    Find opportunities that match your
+                    qualifications and skills.
+                </p>
+
+            </div>
+
+
+            <div class="job-count">
+
+                <strong id="jobCount">
+                    0
+                </strong>
+
+                <span>
+                    Opportunities Available
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             DYNAMIC JOB LIST
+        ========================== -->
+
+        <div
+            class="job-list"
+            id="jobList">
+
+            <!-- Jobs will be loaded from MySQL -->
+
+            <p id="loadingMessage">
+                Loading jobs...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CTA
+    ========================== -->
+
+    <section class="jobs-cta">
+
+        <h2>
+            Can't Find the Right Opportunity?
+        </h2>
+
+        <p>
+            Create your profile and stay updated with
+            new placement opportunities.
+        </p>
+
+        <a
+            href="student-profile.html"
+            class="register-btn">
+
+            Create Your Profile
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+
+            <div class="footer-section">
+
+                <h2>
+                    🎓 CampusHire
+                </h2>
+
+                <p>
+                    Student Placement Management System
+                </p>
+
+                <p>
+                    Connecting students with career
+                    opportunities and leading recruiters.
+                </p>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="companies.html">
+                    Companies
+                </a>
+
+                <a href="jobs.html">
+                    Jobs
+                </a>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h3>
+                    For Students
+                </h3>
+
+                <a href="register.html">
+                    Register
+                </a>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+                <a href="jobs.html">
+                    Browse Jobs
+                </a>
+
+                <a href="my-applications.html">
+                    My Applications
+                </a>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h3>
+                    Contact Us
+                </h3>
+
+                <p>
+                    📧 placement@campushire.com
+                </p>
+
+                <p>
+                    📞 +91 79797 36181
+                </p>
+
+                <p>
+                    📍 Greater Noida, India
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 CampusHire. All Rights Reserved.
+            </p>
+
+            <div class="footer-bottom-links">
+
+                <a href="#">
+                    Privacy Policy
+                </a>
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+                <a href="#">
+                    LinkedIn
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        // =========================================
+        // VARIABLES
+        // =========================================
+
+        let allJobs = [];
+
+
+        const jobList =
+            document.getElementById("jobList");
+
+
+        const jobCount =
+            document.getElementById("jobCount");
+
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+
+        const jobTypeFilter =
+            document.getElementById("jobTypeFilter");
+
+
+        const locationFilter =
+            document.getElementById("locationFilter");
+
+
+        const experienceFilter =
+            document.getElementById("experienceFilter");
+
+
+        const searchButton =
+            document.getElementById("searchButton");
+
+
+
+        // =========================================
+        // LOAD JOBS FROM BACKEND
+        // =========================================
+
+        async function loadJobs() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://localhost:3000/api/jobs"
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load jobs."
+                    );
+
+                }
+
+
+                allJobs =
+                    data.jobs;
+
+
+                displayJobs(allJobs);
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Jobs loading error:",
+                    error
+                );
+
+
+                jobList.innerHTML = `
+
+                    <div class="no-jobs">
+
+                        <h3>
+                            Unable to load jobs
+                        </h3>
+
+                        <p>
+                            Please make sure the CampusHire
+                            backend server is running.
+                        </p>
+
+                    </div>
+
+                `;
+
+                jobCount.textContent = "0";
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // DISPLAY JOBS
+        // =========================================
+
+        function displayJobs(jobs) {
+
+            jobList.innerHTML = "";
+
+
+            jobCount.textContent =
+                jobs.length;
+
+
+            if (jobs.length === 0) {
+
+                jobList.innerHTML = `
+
+                    <div class="no-jobs">
+
+                        <h3>
+                            No jobs found
+                        </h3>
+
+                        <p>
+                            Try changing your search or filters.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            jobs.forEach(job => {
+
+
+                // Get company initials
+
+                const companyName =
+                    job.company_name || "Company";
+
+
+                const companyLogo =
+                    companyName
+                    .substring(0, 4)
+                    .toUpperCase();
+
+
+
+                // Create skills
+
+                let skillsHTML = "";
+
+
+                if (job.skills) {
+
+                    const skills =
+                        job.skills
+                        .split(",");
+
+
+                    skills.forEach(skill => {
+
+                        skillsHTML += `
+
+                            <span>
+                                ${skill.trim()}
+                            </span>
+
+                        `;
+
+                    });
+
+                }
+
+
+
+                // Create job card
+
+                const jobCard =
+                    document.createElement("div");
+
+
+                jobCard.className =
+                    "job-card";
+
+
+                jobCard.innerHTML = `
+
+                    <div class="job-company-logo">
+                        ${companyLogo}
+                    </div>
+
+
+                    <div class="job-details">
+
+                        <h3>
+                            ${job.title}
+                        </h3>
+
+
+                        <p class="job-company">
+                            ${companyName}
+                        </p>
+
+
+                        <div class="job-meta">
+
+                            <span>
+                                📍 ${job.location || "Not specified"}
+                            </span>
+
+                            <span>
+                                💼 ${job.job_type || "Not specified"}
+                            </span>
+
+                            <span>
+                                🎓 ${job.experience || "Not specified"}
+                            </span>
+
+                        </div>
+
+
+                        <div class="job-skills">
+
+                            ${skillsHTML}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="job-action">
+
+                        <span class="job-date">
+
+                            ${
+                                job.application_deadline
+                                ? "Apply by " +
+                                  formatDate(
+                                      job.application_deadline
+                                  )
+                                : "Open"
+                            }
+
+                        </span>
+
+
+                        <a
+                            href="job-details.html?id=${job.id}"
+                            class="view-job-btn">
+
+                            View Details
+
+                        </a>
+
+                    </div>
+
+                `;
+
+
+                jobList.appendChild(jobCard);
+
+            });
+
+        }
+
+
+
+        // =========================================
+        // FORMAT DATE
+        // =========================================
+
+        function formatDate(dateString) {
+
+            const date =
+                new Date(dateString);
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+
+        // =========================================
+        // FILTER JOBS
+        // =========================================
+
+        function filterJobs() {
+
+            const search =
+                searchInput
+                .value
+                .trim()
+                .toLowerCase();
+
+
+            const jobType =
+                jobTypeFilter.value;
+
+
+            const location =
+                locationFilter.value;
+
+
+            const experience =
+                experienceFilter.value;
+
+
+
+            const filteredJobs =
+                allJobs.filter(job => {
+
+
+                    const searchText = `
+
+                        ${job.title || ""}
+
+                        ${job.company_name || ""}
+
+                        ${job.skills || ""}
+
+                        ${job.description || ""}
+
+                    `.toLowerCase();
+
+
+
+                    const matchesSearch =
+                        !search ||
+                        searchText.includes(search);
+
+
+                    const matchesJobType =
+                        !jobType ||
+                        job.job_type === jobType;
+
+
+                    const matchesLocation =
+                        !location ||
+                        job.location === location;
+
+
+                    const matchesExperience =
+                        !experience ||
+                        job.experience === experience;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesJobType &&
+                        matchesLocation &&
+                        matchesExperience
+                    );
+
+                });
+
+
+            displayJobs(filteredJobs);
+
+        }
+
+
+
+        // =========================================
+        // SEARCH BUTTON
+        // =========================================
+
+        searchButton.addEventListener(
+            "click",
+            filterJobs
+        );
+
+
+
+        // =========================================
+        // LIVE SEARCH
+        // =========================================
+
+        searchInput.addEventListener(
+            "input",
+            filterJobs
+        );
+
+
+        jobTypeFilter.addEventListener(
+            "change",
+            filterJobs
+        );
+
+
+        locationFilter.addEventListener(
+            "change",
+            filterJobs
+        );
+
+
+        experienceFilter.addEventListener(
+            "change",
+            filterJobs
+        );
+
+
+
+        // =========================================
+        // LOAD JOBS
+        // =========================================
+
+        loadJobs();
+
+    </script>
+
+
+</body>
+
+</html>

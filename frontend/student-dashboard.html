@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>My Profile | CampusHire</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="profile-page">
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+      <div class="sidebar-logo">🎓 CampusHire</div>
+
+      <div class="sidebar-user">
+        <div class="user-avatar">👨‍🎓</div>
+
+        <div>
+          <h3 id="sidebarName">Student</h3>
+
+          <p>Student</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="student-dashboard.html"> 🏠 Dashboard </a>
+
+        <a href="student-profile.html"> 👤 My Profile </a>
+
+        <a href="jobs.html"> 💼 Find Jobs </a>
+
+        <a href="my-applications.html"> 📋 My Applications </a>
+
+        <a href="./saved-jobs.html"> ⭐ Saved Jobs </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="index.html"> 🏠 Back to Website </a>
+
+        <a href="#" id="logoutBtn"> 🚪 Logout </a>
+      </div>
+    </aside>
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="profile-main">
+      <!-- =========================
+             HEADER
+        ========================== -->
+
+      <header class="profile-header">
+        <div>
+          <p class="dashboard-label">STUDENT PROFILE</p>
+
+          <h1>My Profile</h1>
+
+          <p>
+            Keep your information updated to improve your placement
+            opportunities.
+          </p>
+        </div>
+      </header>
+
+      <!-- =========================
+     APPLICATION STATISTICS
+========================= -->
+
+<section class="student-stats">
+
+  <div class="stat-card">
+
+    <div class="stat-icon">
+      📋
+    </div>
+
+    <div>
+      <p>Total Applications</p>
+
+      <h2 id="totalApplications">
+        0
+      </h2>
+    </div>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <div class="stat-icon">
+      ⏳
+    </div>
+
+    <div>
+      <p>Pending</p>
+
+      <h2 id="pendingApplications">
+        0
+      </h2>
+    </div>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <div class="stat-icon">
+      ⭐
+    </div>
+
+    <div>
+      <p>Shortlisted</p>
+
+      <h2 id="shortlistedApplications">
+        0
+      </h2>
+    </div>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <div class="stat-icon">
+      🎉
+    </div>
+
+    <div>
+      <p>Selected</p>
+
+      <h2 id="selectedApplications">
+        0
+      </h2>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     RECENT APPLICATIONS
+========================= -->
+
+<section class="recent-applications-section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <p class="dashboard-label">
+                RECENT ACTIVITY
+            </p>
+
+            <h2>
+                Recent Applications
+            </h2>
+
+            <p>
+                Your latest job applications
+            </p>
+
+        </div>
+
+
+        <a
+            href="my-applications.html"
+            class="view-all-applications-btn"
+        >
+            View All Applications →
+        </a>
+
+    </div>
+
+
+    <div
+        id="recentApplications"
+        class="recent-applications-list"
+    >
+
+        <p class="loading-applications">
+            Loading your applications...
+        </p>
+
+    </div>
+
+</section>
+      <!-- =========================
+             PROFILE CARD
+        ========================== -->
+
+      <section class="profile-card">
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-card-heading">
+          <div class="profile-avatar">👨‍🎓</div>
+
+          <div>
+            <h2 id="profileName">Student</h2>
+
+            <p id="profileEmail">student@example.com</p>
+          </div>
+        </div>
+
+        <!-- =========================
+                 PROFILE FORM
+            ========================== -->
+
+        <form id="profileForm">
+          <!-- =========================
+                     PERSONAL INFORMATION
+                ========================== -->
+
+          <h3 class="section-title">Personal Information</h3>
+
+          <div class="profile-grid">
+            <!-- FULL NAME -->
+
+            <div class="form-group">
+              <label for="fullName"> Full Name </label>
+
+              <input type="text" id="fullName" required />
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+              <label for="email"> Email Address </label>
+
+              <input type="email" id="email" readonly />
+            </div>
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+              <label for="phone"> Phone Number </label>
+
+              <input
+                type="tel"
+                id="phone"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                placeholder="Enter 10 digit phone number"
+                required
+              />
+            </div>
+
+            <!-- COLLEGE -->
+
+            <div class="form-group">
+              <label for="college"> College / University </label>
+
+              <input
+                type="text"
+                id="college"
+                placeholder="Enter your college"
+              />
+            </div>
+
+            <!-- COURSE -->
+
+            <div class="form-group">
+              <label for="course"> Course </label>
+
+              <input type="text" id="course" placeholder="Example: MCA" />
+            </div>
+
+            <!-- GRADUATION YEAR -->
+
+            <div class="form-group">
+              <label for="graduationYear"> Graduation Year </label>
+
+              <select id="graduationYear">
+                <option value="">Select Year</option>
+
+                <option value="2026">2026</option>
+
+                <option value="2027">2027</option>
+
+                <option value="2028">2028</option>
+
+                <option value="2029">2029</option>
+
+                <option value="2030">2030</option>
+              </select>
+            </div>
+
+            <!-- CGPA -->
+
+            <div class="form-group">
+              <label for="cgpa"> CGPA </label>
+
+              <input
+                type="number"
+                id="cgpa"
+                min="0"
+                max="10"
+                step="0.01"
+                placeholder="Example: 8.50"
+              />
+            </div>
+          </div>
+
+          <!-- =========================
+                     SKILLS
+                ========================== -->
+
+          <h3 class="section-title">Skills</h3>
+
+          <div class="form-group">
+            <label for="skills"> Technical Skills </label>
+
+            <textarea
+              id="skills"
+              rows="4"
+              placeholder="Example: Java, Python, SQL, HTML, CSS, JavaScript"
+            ></textarea>
+
+            <small> Separate multiple skills using commas. </small>
+          </div>
+
+          <!-- =========================
+                     RESUME
+                ========================== -->
+
+          <h3 class="section-title">Resume</h3>
+
+          <div class="form-group">
+            <label for="resume"> Resume </label>
+
+            <input
+              type="text"
+              id="resume"
+              placeholder="Example: Amit_Resume.pdf"
+            />
+
+            <small> Enter your resume file name for now. </small>
+          </div>
+
+          <!-- =========================
+                     BUTTON
+                ========================== -->
+
+          <div class="profile-actions">
+            <button type="submit" class="save-profile-btn">Save Profile</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+      // =========================================
+      // GET LOGGED-IN USER
+      // =========================================
+
+      const storedUser = localStorage.getItem("user");
+
+      // =========================================
+      // CHECK LOGIN
+      // =========================================
+
+      if (!storedUser) {
+        window.location.href = "login.html";
+      }
+
+      let user;
+
+      try {
+        user = JSON.parse(storedUser);
+      } catch (error) {
+        localStorage.removeItem("user");
+
+        window.location.href = "login.html";
+      }
+
+      // =========================================
+      // CHECK STUDENT ROLE
+      // =========================================
+
+      if (user && user.role !== "student") {
+        alert("You are not authorized to access this page.");
+
+        window.location.href = "login.html";
+      }
+
+      // =========================================
+      // DISPLAY USER INFORMATION
+      // =========================================
+
+      document.getElementById("sidebarName").textContent = user.full_name;
+
+      document.getElementById("profileName").textContent = user.full_name;
+
+      document.getElementById("profileEmail").textContent = user.email;
+
+      document.getElementById("fullName").value = user.full_name;
+
+      document.getElementById("email").value = user.email;
+
+      // =========================================
+// =========================================
+// LOAD EXISTING PROFILE
+// =========================================
+
+async function loadProfile() {
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:3000/api/student/profile/${user.id}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (response.ok && data.profile) {
+
+            const profile =
+                data.profile;
+
+
+            document.getElementById("phone").value =
+                profile.phone || "";
+
+
+            document.getElementById("college").value =
+                profile.college || "";
+
+
+            document.getElementById("course").value =
+                profile.course || "";
+
+
+            document.getElementById("graduationYear").value =
+                profile.graduation_year || "";
+
+
+            document.getElementById("cgpa").value =
+                profile.cgpa || "";
+
+
+            document.getElementById("skills").value =
+                profile.skills || "";
+
+
+            document.getElementById("resume").value =
+                profile.resume || "";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Profile loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =========================================
+// LOAD STUDENT DASHBOARD STATS
+// =========================================
+
+async function loadStudentDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:3000/api/student/dashboard/${user.id}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load dashboard."
+            );
+
+        }
+
+
+        const stats =
+            data.stats;
+
+
+        document.getElementById(
+            "totalApplications"
+        ).textContent =
+            stats.totalApplications;
+
+
+        document.getElementById(
+            "pendingApplications"
+        ).textContent =
+            stats.pendingApplications;
+
+
+        document.getElementById(
+            "shortlistedApplications"
+        ).textContent =
+            stats.shortlistedApplications;
+
+
+        document.getElementById(
+            "selectedApplications"
+        ).textContent =
+            stats.selectedApplications;
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Student dashboard loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =========================================
+// LOAD RECENT APPLICATIONS
+// =========================================
+
+async function loadRecentApplications() {
+
+    const recentApplications =
+        document.getElementById(
+            "recentApplications"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:3000/api/applications/student/${user.id}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load applications."
+            );
+
+        }
+
+
+        if (
+            !data.applications ||
+            data.applications.length === 0
+        ) {
+
+            recentApplications.innerHTML = `
+
+                <div class="no-applications">
+
+                    <h3>
+                        No Applications Yet
+                    </h3>
+
+                    <p>
+                        You have not applied for any jobs yet.
+                    </p>
+
+                    <a
+                        href="jobs.html"
+                        class="view-all-applications-btn"
+                    >
+                        Find Jobs
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        const latestApplications =
+            data.applications.slice(0, 3);
+
+
+        recentApplications.innerHTML =
+            latestApplications.map(
+                function(application) {
+
+                    const status =
+                        application.status ||
+                        "Pending";
+
+
+                    const statusClass =
+                        status
+                            .toLowerCase()
+                            .replace(/\s+/g, "-");
+
+
+                    const appliedDate =
+                        new Date(
+                            application.applied_at
+                        ).toLocaleDateString(
+                            "en-IN",
+                            {
+
+                                day: "numeric",
+
+                                month: "short",
+
+                                year: "numeric"
+
+                            }
+                        );
+
+
+                    return `
+
+                        <div class="recent-application-card">
+
+                            <div class="recent-application-info">
+
+                                <h3>
+                                    ${application.title}
+                                </h3>
+
+
+                                <p>
+                                    🏢
+                                    ${
+                                        application.company_name ||
+                                        "Company"
+                                    }
+                                </p>
+
+
+                                <p>
+                                    📍
+                                    ${
+                                        application.location ||
+                                        "Not specified"
+                                    }
+                                </p>
+
+
+                                <p>
+                                    Applied on
+                                    ${appliedDate}
+                                </p>
+
+                            </div>
+
+
+                            <div class="recent-application-actions">
+
+                                <span
+                                    class="
+                                        application-status
+                                        status-${statusClass}
+                                    "
+                                >
+                                    ${status}
+                                </span>
+
+
+                                <a
+                                    href="job-details.html?id=${application.job_id}"
+                                    class="view-job-application-btn"
+                                >
+                                    View Job
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+
+            ).join("");
+
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Recent applications error:",
+            error
+        );
+
+
+        recentApplications.innerHTML = `
+
+            <p class="loading-applications">
+
+                Unable to load applications.
+
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+// =========================================
+// LOAD ALL PAGE DATA
+// =========================================
+
+loadProfile();
+
+loadStudentDashboard();
+
+loadRecentApplications();
+
+
+// =========================================
+// AUTO REFRESH DASHBOARD
+// =========================================
+
+setInterval(
+    function () {
+
+        loadStudentDashboard();
+
+        loadRecentApplications();
+
+    },
+
+    10000
+);
+
+      // Load profile when page opens
+
+      loadProfile();
+
+      // =========================================
+      // SAVE PROFILE
+      // =========================================
+
+      const profileForm = document.getElementById("profileForm");
+
+      profileForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        // Get values
+
+        const fullName = document.getElementById("fullName").value.trim();
+
+        const phone = document.getElementById("phone").value.trim();
+
+        const college = document.getElementById("college").value.trim();
+
+        const course = document.getElementById("course").value.trim();
+
+        const graduationYear = document.getElementById("graduationYear").value;
+
+        const cgpa = document.getElementById("cgpa").value;
+
+        const skills = document.getElementById("skills").value.trim();
+
+        const resume = document.getElementById("resume").value.trim();
+
+        // =================================
+        // VALIDATE PHONE
+        // =================================
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+          alert("Please enter a valid 10-digit phone number.");
+
+          return;
+        }
+
+        // =================================
+        // VALIDATE CGPA
+        // =================================
+
+        if (cgpa !== "" && (cgpa < 0 || cgpa > 10)) {
+          alert("CGPA must be between 0 and 10.");
+
+          return;
+        }
+
+        // =================================
+        // SEND TO BACKEND
+        // =================================
+
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/student/profile",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+              },
+
+              body: JSON.stringify({
+                userId: user.id,
+
+                fullName: fullName,
+
+                phone: phone,
+
+                college: college,
+
+                course: course,
+
+                graduationYear: graduationYear,
+
+                cgpa: cgpa,
+
+                skills: skills,
+
+                resume: resume,
+              }),
+            },
+          );
+
+          const data = await response.json();
+
+          // =================================
+          // SUCCESS
+          // =================================
+
+          if (response.ok) {
+            alert(data.message);
+
+            // Update local user name
+
+            user.full_name = fullName;
+
+            localStorage.setItem("user", JSON.stringify(user));
+
+            document.getElementById("sidebarName").textContent = fullName;
+
+            document.getElementById("profileName").textContent = fullName;
+          }
+
+          // =================================
+          // ERROR
+          // =================================
+          else {
+            alert(data.message || "Unable to save profile.");
+          }
+        } catch (error) {
+          console.error("Profile error:", error);
+
+          alert("Unable to connect to the server.");
+        }
+      });
+
+      // =========================================
+      // LOGOUT
+      // =========================================
+
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          localStorage.removeItem("user");
+
+          window.location.href = "login.html";
+        });
+    </script>
+  </body>
+</html>

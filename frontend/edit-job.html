@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Job | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="edit-job-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="recruiter-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="post-job.html">
+                ➕ Post a Job
+            </a>
+
+            <a
+                href="manage-jobs.html"
+                class="active"
+            >
+                💼 Manage Jobs
+            </a>
+
+            <a href="manage-applicants.html">
+                👥 View Applicants
+            </a>
+
+            <a href="company-profile.html">
+                🏢 Company Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a
+                href="#"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="edit-job-main">
+
+
+        <a
+            href="manage-jobs.html"
+            class="back-button"
+        >
+            ← Back to Manage Jobs
+        </a>
+
+
+        <header class="edit-job-header">
+
+            <p class="dashboard-label">
+                MANAGE JOBS
+            </p>
+
+            <h1>
+                Edit Job
+            </h1>
+
+            <p>
+                Update the details of your job posting.
+            </p>
+
+        </header>
+
+
+        <!-- JOB FORM -->
+
+        <section class="edit-job-section">
+
+            <form id="editJobForm">
+
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Job Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Job Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="6"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="location">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="jobType">
+                            Job Type
+                        </label>
+
+                        <select
+                            id="jobType"
+                            required
+                        >
+
+                            <option value="">
+                                Select Job Type
+                            </option>
+
+                            <option value="Full Time">
+                                Full Time
+                            </option>
+
+                            <option value="Part Time">
+                                Part Time
+                            </option>
+
+                            <option value="Internship">
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="experience">
+                            Experience
+                        </label>
+
+                        <input
+                            type="text"
+                            id="experience"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="salary">
+                            Salary
+                        </label>
+
+                        <input
+                            type="text"
+                            id="salary"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="eligibility">
+                        Eligibility
+                    </label>
+
+                    <input
+                        type="text"
+                        id="eligibility"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="skills">
+                        Required Skills
+                    </label>
+
+                    <textarea
+                        id="skills"
+                        rows="3"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="deadline">
+                        Application Deadline
+                    </label>
+
+                    <input
+                        type="date"
+                        id="deadline"
+                    >
+
+                </div>
+
+
+
+                <div class="edit-job-actions">
+
+                    <a
+                        href="manage-jobs.html"
+                        class="cancel-edit-btn"
+                    >
+                        Cancel
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-job-btn"
+                    >
+                        💾 Save Changes
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        if (
+            user &&
+            user.role !== "recruiter"
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+
+        // =========================================
+        // GET JOB ID FROM URL
+        // =========================================
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const jobId =
+            params.get("jobId");
+
+
+        if (!jobId) {
+
+            window.location.href =
+                "manage-jobs.html";
+
+        }
+
+
+
+        // =========================================
+        // LOAD JOB DETAILS
+        // =========================================
+
+        async function loadJobDetails() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/jobs/${jobId}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load job."
+                    );
+
+                }
+
+
+                const job =
+                    data.job;
+
+
+                document.getElementById(
+                    "title"
+                ).value =
+                    job.title || "";
+
+
+                document.getElementById(
+                    "description"
+                ).value =
+                    job.description || "";
+
+
+                document.getElementById(
+                    "location"
+                ).value =
+                    job.location || "";
+
+
+                document.getElementById(
+                    "jobType"
+                ).value =
+                    job.job_type || "";
+
+
+                document.getElementById(
+                    "experience"
+                ).value =
+                    job.experience || "";
+
+
+                document.getElementById(
+                    "salary"
+                ).value =
+                    job.salary || "";
+
+
+                document.getElementById(
+                    "eligibility"
+                ).value =
+                    job.eligibility || "";
+
+
+                document.getElementById(
+                    "skills"
+                ).value =
+                    job.skills || "";
+
+
+                document.getElementById(
+                    "deadline"
+                ).value =
+                    job.application_deadline
+                        ? job.application_deadline
+                            .split("T")[0]
+                        : "";
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Job loading error:",
+                    error
+                );
+
+                alert(
+                    error.message
+                );
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // SUBMIT UPDATED JOB
+        // =========================================
+
+        document.getElementById(
+            "editJobForm"
+        ).addEventListener(
+            "submit",
+
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const updatedJob = {
+
+                    title:
+                        document.getElementById(
+                            "title"
+                        ).value,
+
+                    description:
+                        document.getElementById(
+                            "description"
+                        ).value,
+
+                    location:
+                        document.getElementById(
+                            "location"
+                        ).value,
+
+                    jobType:
+                        document.getElementById(
+                            "jobType"
+                        ).value,
+
+                    experience:
+                        document.getElementById(
+                            "experience"
+                        ).value,
+
+                    salary:
+                        document.getElementById(
+                            "salary"
+                        ).value,
+
+                    eligibility:
+                        document.getElementById(
+                            "eligibility"
+                        ).value,
+
+                    skills:
+                        document.getElementById(
+                            "skills"
+                        ).value,
+
+                    deadline:
+                        document.getElementById(
+                            "deadline"
+                        ).value
+
+                };
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `http://localhost:3000/api/jobs/${jobId}`,
+                            {
+
+                                method: "PUT",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify(
+                                        updatedJob
+                                    )
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            "Unable to update job."
+                        );
+
+                    }
+
+
+                    alert(
+                        "Job updated successfully!"
+                    );
+
+
+                    window.location.href =
+                        "manage-jobs.html";
+
+                }
+
+                catch (error) {
+
+                    console.log(
+                        "Job update error:",
+                        error
+                    );
+
+
+                    alert(
+                        error.message
+                    );
+
+                }
+
+            }
+
+        );
+
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+
+            function(event) {
+
+                event.preventDefault();
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+
+        );
+
+
+
+        // START
+
+        loadJobDetails();
+
+
+    </script>
+
+
+</body>
+
+</html>

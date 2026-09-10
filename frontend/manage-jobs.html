@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Jobs | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="manage-jobs-page">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="recruiter-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="post-job.html">
+                ➕ Post a Job
+            </a>
+
+            <a
+                href="manage-jobs.html"
+                class="active"
+            >
+                💼 Manage Jobs
+            </a>
+
+            <a href="manage-applicants.html">
+                👥 View Applicants
+            </a>
+
+            <a href="company-profile.html">
+                🏢 Company Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a
+                href="#"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="manage-jobs-main">
+
+
+        <header class="manage-jobs-header">
+
+            <p class="dashboard-label">
+                RECRUITER DASHBOARD
+            </p>
+
+
+            <h1>
+                Manage Jobs
+            </h1>
+
+
+            <p>
+                View, edit and manage
+                your active job postings.
+            </p>
+
+        </header>
+
+
+
+        <!-- JOBS SECTION -->
+
+        <section class="manage-jobs-section">
+
+            <div class="manage-jobs-section-header">
+
+                <div>
+
+                    <h2>
+                        Your Job Postings
+                    </h2>
+
+                    <p>
+                        Manage all jobs
+                        posted by your company.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="post-job.html"
+                    class="post-new-job-btn"
+                >
+                    ➕ Post New Job
+                </a>
+
+            </div>
+
+
+
+            <!-- JOBS WILL LOAD HERE -->
+
+            <div
+                id="jobsList"
+                class="jobs-list"
+            >
+
+                <p class="jobs-loading">
+                    Loading jobs...
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        if (
+            user &&
+            user.role !== "recruiter"
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+
+        // =========================================
+        // LOAD JOBS
+        // =========================================
+
+        const jobsList =
+            document.getElementById(
+                "jobsList"
+            );
+
+
+        async function loadJobs() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/recruiter/jobs/${user.id}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load jobs."
+                    );
+
+                }
+
+
+                if (
+                    !data.jobs ||
+                    data.jobs.length === 0
+                ) {
+
+                    jobsList.innerHTML = `
+
+                        <div class="no-jobs">
+
+                            <div class="empty-icon">
+
+                                💼
+
+                            </div>
+
+
+                            <h2>
+                                No Jobs Posted Yet
+                            </h2>
+
+
+                            <p>
+                                You haven't posted
+                                any jobs yet.
+                            </p>
+
+
+                            <a
+                                href="post-job.html"
+                                class="post-new-job-btn"
+                            >
+                                Post Your First Job
+                            </a>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                jobsList.innerHTML =
+                    data.jobs.map(
+                        function(job) {
+
+                            return `
+
+                                <div class="manage-job-card">
+
+
+                                    <div class="manage-job-info">
+
+                                        <h3>
+
+                                            ${job.title}
+
+                                        </h3>
+
+
+                                        <p>
+
+                                            📍
+                                            ${job.location || "Not specified"}
+
+                                        </p>
+
+
+                                        <p>
+
+                                            💼
+                                            ${job.job_type || "Not specified"}
+
+                                        </p>
+
+
+                                    </div>
+
+
+                                    <div class="manage-job-meta">
+
+                                        <p>
+
+                                            <strong>
+                                                Salary:
+                                            </strong>
+
+                                            ${job.salary || "Not specified"}
+
+                                        </p>
+
+
+                                        <p>
+
+                                            <strong>
+                                                Deadline:
+                                            </strong>
+
+                                            ${job.deadline
+                                                ? new Date(
+                                                    job.deadline
+                                                ).toLocaleDateString()
+                                                : "Not specified"}
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="manage-job-actions">
+
+                                        <button
+                                            class="edit-job-btn"
+                                            onclick="editJob(
+                                                ${job.id}
+                                            )"
+                                        >
+                                            ✏️ Edit
+                                        </button>
+
+
+                                        <button
+                                            class="delete-job-btn"
+                                            onclick="deleteJob(
+                                                ${job.id}
+                                            )"
+                                        >
+                                            🗑️ Delete
+                                        </button>
+
+                                    </div>
+
+
+                                </div>
+
+                            `;
+
+                        }
+                    ).join("");
+
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Jobs loading error:",
+                    error
+                );
+
+
+                jobsList.innerHTML = `
+
+                    <div class="jobs-error">
+
+                        <h2>
+                            Unable to Load Jobs
+                        </h2>
+
+                        <p>
+                            ${error.message}
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // EDIT JOB
+        // =========================================
+
+        function editJob(jobId) {
+
+            window.location.href =
+                `edit-job.html?jobId=${jobId}`;
+
+        }
+
+
+
+        // =========================================
+        // DELETE JOB
+        // =========================================
+
+async function deleteJob(jobId) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this job?"
+        );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:3000/api/jobs/${jobId}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to delete job."
+            );
+
+        }
+
+
+        alert(
+            "Job deleted successfully!"
+        );
+
+
+        loadJobs();
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Job delete error:",
+            error
+        );
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+
+        // START
+
+        loadJobs();
+
+
+    </script>
+
+
+</body>
+
+</html>

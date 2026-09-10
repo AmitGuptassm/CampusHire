@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Post a Job | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="post-job-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="recruiter-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a
+                href="post-job.html"
+                class="active"
+            >
+                ➕ Post a Job
+            </a>
+
+            <a href="my-jobs.html">
+                💼 My Posted Jobs
+            </a>
+
+            <a href="applicants.html">
+                📋 Applicants
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a
+                href="login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="post-job-main">
+
+
+        <header class="post-job-header">
+
+            <div>
+
+                <p class="dashboard-label">
+                    JOB MANAGEMENT
+                </p>
+
+                <h1>
+                    Post a New Job
+                </h1>
+
+                <p>
+                    Create a new opportunity for
+                    students on CampusHire.
+                </p>
+
+            </div>
+
+
+            <a
+                href="recruiter-dashboard.html"
+                class="back-dashboard-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </header>
+
+
+
+        <!-- =========================
+             FORM
+        ========================== -->
+
+        <section class="post-job-form-section">
+
+
+            <form id="postJobForm">
+
+
+                <!-- JOB INFORMATION -->
+
+                <h2>
+                    Job Information
+                </h2>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="title">
+                            Job Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder="e.g. Software Engineer"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="jobType">
+                            Job Type
+                        </label>
+
+                        <select
+                            id="jobType"
+                            required
+                        >
+
+                            <option value="">
+                                Select job type
+                            </option>
+
+                            <option value="Full Time">
+                                Full Time
+                            </option>
+
+                            <option value="Part Time">
+                                Part Time
+                            </option>
+
+                            <option value="Internship">
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Job Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        placeholder="Describe the job role and responsibilities..."
+                        rows="6"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- LOCATION + EXPERIENCE -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="location">
+                            Job Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            placeholder="e.g. Bengaluru"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="experience">
+                            Experience Required
+                        </label>
+
+                        <input
+                            type="text"
+                            id="experience"
+                            placeholder="e.g. Fresher / 1-2 Years"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SALARY + DEADLINE -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="salary">
+                            Salary Package
+                        </label>
+
+                        <input
+                            type="text"
+                            id="salary"
+                            placeholder="e.g. ₹4 - ₹7 LPA"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="deadline">
+                            Application Deadline
+                        </label>
+
+                        <input
+                            type="date"
+                            id="deadline"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SKILLS -->
+
+                <div class="form-group">
+
+                    <label for="skills">
+                        Required Skills
+                    </label>
+
+                    <input
+                        type="text"
+                        id="skills"
+                        placeholder="e.g. Java, SQL, HTML, CSS"
+                        required
+                    >
+
+                    <small>
+                        Separate skills using commas.
+                    </small>
+
+                </div>
+
+
+
+                <!-- ELIGIBILITY -->
+
+                <div class="form-group">
+
+                    <label for="eligibility">
+                        Eligibility Criteria
+                    </label>
+
+                    <textarea
+                        id="eligibility"
+                        placeholder="e.g. Minimum 60% in graduation"
+                        rows="4"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- BUTTONS -->
+
+                <div class="post-job-buttons">
+
+
+                    <button
+                        type="submit"
+                        class="post-job-submit"
+                    >
+                        Post Job
+                    </button>
+
+
+                    <a
+                        href="recruiter-dashboard.html"
+                        class="cancel-job-btn"
+                    >
+                        Cancel
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        // =========================================
+        // CHECK RECRUITER
+        // =========================================
+
+        if (user && user.role !== "recruiter") {
+
+            alert(
+                "Only recruiters can post jobs."
+            );
+
+            window.location.href =
+                "student-dashboard.html";
+
+        }
+
+
+        // =========================================
+        // DISPLAY NAME
+        // =========================================
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+        // =========================================
+        // SUBMIT FORM
+        // =========================================
+
+document.getElementById(
+    "postJobForm"
+).addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const submitButton =
+            document.querySelector(
+                ".post-job-submit"
+            );
+
+
+        const jobData = {
+
+            title:
+                document.getElementById(
+                    "title"
+                ).value.trim(),
+
+            description:
+                document.getElementById(
+                    "description"
+                ).value.trim(),
+
+            location:
+                document.getElementById(
+                    "location"
+                ).value.trim(),
+
+            jobType:
+                document.getElementById(
+                    "jobType"
+                ).value,
+
+            experience:
+                document.getElementById(
+                    "experience"
+                ).value.trim(),
+
+            salary:
+                document.getElementById(
+                    "salary"
+                ).value.trim(),
+
+            deadline:
+                document.getElementById(
+                    "deadline"
+                ).value,
+
+            skills:
+                document.getElementById(
+                    "skills"
+                ).value.trim(),
+
+            eligibility:
+                document.getElementById(
+                    "eligibility"
+                ).value.trim(),
+
+            recruiterId:
+                user.id
+
+        };
+
+
+        try {
+
+            submitButton.disabled = true;
+
+            submitButton.textContent =
+                "Posting Job...";
+
+
+            const response =
+                await fetch(
+                    "http://localhost:3000/api/jobs",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                jobData
+                            )
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to post job."
+                );
+
+            }
+
+
+            alert(
+                data.message
+            );
+
+
+            window.location.href =
+                "recruiter-dashboard.html";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+
+            alert(
+                error.message
+            );
+
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Post Job";
+
+        }
+
+    }
+);
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

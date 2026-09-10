@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Recruiter Dashboard | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="recruiter-dashboard-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <!-- COMPANY PROFILE -->
+
+            <a href="recruiter-profile.html">
+                🏢 Company Profile
+            </a>
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="recruiter-dashboard.html"
+                class="active"
+            >
+                🏠 Dashboard
+            </a>
+
+
+            <!-- POST JOB -->
+
+            <a href="post-job.html">
+                ➕ Post a Job
+            </a>
+
+
+            <!-- MY JOBS -->
+
+            <a href="my-jobs.html">
+                💼 My Posted Jobs
+            </a>
+
+
+            <!-- APPLICANTS -->
+
+            <a href="applicants.html">
+                📋 Applicants
+            </a>
+
+
+        </nav>
+
+
+        <!-- BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+
+            <a
+                href="login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="recruiter-dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="recruiter-dashboard-header">
+
+
+            <div>
+
+                <p class="dashboard-label">
+                    RECRUITER DASHBOARD
+                </p>
+
+
+                <h1>
+                    Welcome,
+                    <span id="welcomeName">
+                        Recruiter
+                    </span>
+                    👋
+                </h1>
+
+
+                <p>
+                    Manage your job postings and
+                    find the right candidates.
+                </p>
+
+            </div>
+
+
+            <a
+                href="post-job.html"
+                class="dashboard-primary-btn"
+            >
+                + Post New Job
+            </a>
+
+
+        </header>
+
+
+
+        <!-- =========================
+             STATS
+        ========================== -->
+
+        <section class="recruiter-stats">
+
+
+            <!-- TOTAL JOBS -->
+
+            <div class="recruiter-stat-card">
+
+                <div class="stat-icon">
+                    💼
+                </div>
+
+
+                <div>
+
+                    <h2 id="totalJobs">
+                        0
+                    </h2>
+
+                    <p>
+                        Active Jobs
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TOTAL APPLICANTS -->
+
+            <div class="recruiter-stat-card">
+
+                <div class="stat-icon">
+                    📋
+                </div>
+
+
+                <div>
+
+                    <h2 id="totalApplicants">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Applicants
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PENDING -->
+
+            <div class="recruiter-stat-card">
+
+                <div class="stat-icon">
+                    🟡
+                </div>
+
+
+                <div>
+
+                    <h2 id="pendingApplicants">
+                        0
+                    </h2>
+
+                    <p>
+                        Pending Review
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SELECTED / SHORTLISTED -->
+
+            <div class="recruiter-stat-card">
+
+                <div class="stat-icon">
+                    🟢
+                </div>
+
+
+                <div>
+
+                    <p>
+                        Shortlisted
+                    </p>
+
+                    <h2 id="shortlistedApplicants">
+                        0
+                    </h2>
+
+                    <p>
+                        Selected
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             QUICK ACTIONS
+        ========================== -->
+
+        <section class="recruiter-quick-actions">
+
+
+            <h2>
+                Quick Actions
+            </h2>
+
+
+            <div class="quick-actions-grid">
+
+
+                <!-- POST NEW JOB -->
+
+                <a
+                    href="post-job.html"
+                    class="quick-action-card"
+                >
+
+                    <div class="quick-action-icon">
+                        ➕
+                    </div>
+
+
+                    <h3>
+                        Post New Job
+                    </h3>
+
+
+                    <p>
+                        Create a new placement
+                        opportunity for students.
+                    </p>
+
+                </a>
+
+
+
+                <!-- MANAGE JOBS -->
+
+                <a
+                    href="my-jobs.html"
+                    class="quick-action-card"
+                >
+
+                    <div class="quick-action-icon">
+                        💼
+                    </div>
+
+
+                    <h3>
+                        Manage Jobs
+                    </h3>
+
+                    <p>
+                        View and manage your
+                        posted jobs.
+                    </p>
+
+                </a>
+
+
+
+                <!-- VIEW APPLICANTS -->
+
+                <a
+                    href="applicants.html"
+                    class="quick-action-card"
+                >
+
+                    <div class="quick-action-icon">
+                        👥
+                    </div>
+
+
+                    <h3>
+                        View Applicants
+                    </h3>
+
+
+                    <p>
+                        Review applications and
+                        manage candidate status.
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             RECENT JOBS
+        ========================== -->
+
+        <section class="recruiter-recent-jobs">
+
+
+            <div class="section-title-row">
+
+
+                <div>
+
+                    <h2>
+                        Recent Job Postings
+                    </h2>
+
+
+                    <p>
+                        Your latest job opportunities
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="my-jobs.html"
+                    class="view-all-link"
+                >
+                    View All →
+                </a>
+
+
+            </div>
+
+
+            <div
+                id="recentJobs"
+                class="recent-jobs-list"
+            >
+
+                <p class="dashboard-loading">
+                    Loading your jobs...
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Invalid user data:",
+                error
+            );
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+
+        // =========================================
+        // CHECK RECRUITER ROLE
+        // =========================================
+
+        if (
+            user &&
+            user.role !== "recruiter"
+        ) {
+
+            alert(
+                "Only recruiters can access this page."
+            );
+
+
+            window.location.href =
+                "student-dashboard.html";
+
+        }
+
+
+
+        // =========================================
+        // DISPLAY RECRUITER NAME
+        // =========================================
+
+        if (user) {
+
+            const sidebarName =
+                document.getElementById(
+                    "sidebarName"
+                );
+
+            const welcomeName =
+                document.getElementById(
+                    "welcomeName"
+                );
+
+
+            if (sidebarName) {
+
+                sidebarName.textContent =
+                    user.full_name;
+
+            }
+
+
+            if (welcomeName) {
+
+                welcomeName.textContent =
+                    user.full_name;
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // LOAD RECRUITER DASHBOARD
+        // =========================================
+
+        async function loadRecruiterDashboard() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/recruiter/dashboard/${user.id}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load dashboard."
+                    );
+
+                }
+
+
+                const stats =
+                    data.stats || {};
+
+
+                document.getElementById(
+                    "totalJobs"
+                ).textContent =
+                    stats.totalJobs || 0;
+
+
+                document.getElementById(
+                    "totalApplicants"
+                ).textContent =
+                    stats.totalApplicants || 0;
+
+
+                document.getElementById(
+                    "pendingApplicants"
+                ).textContent =
+                    stats.pendingApplicants || 0;
+
+
+                document.getElementById(
+                    "shortlistedApplicants"
+                ).textContent =
+                    stats.shortlistedApplicants || 0;
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Dashboard loading error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // LOAD RECENT JOBS
+        // =========================================
+
+        async function loadRecentJobs() {
+
+            const recentJobs =
+                document.getElementById(
+                    "recentJobs"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/recruiter/jobs/${user.id}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load recent jobs."
+                    );
+
+                }
+
+
+                if (
+                    !data.jobs ||
+                    data.jobs.length === 0
+                ) {
+
+                    recentJobs.innerHTML = `
+
+                        <div class="recruiter-no-jobs">
+
+                            <div class="empty-icon">
+                                💼
+                            </div>
+
+                            <h3>
+                                No Jobs Posted Yet
+                            </h3>
+
+                            <p>
+                                Start by posting your first
+                                job opportunity.
+                            </p>
+
+                            <a
+                                href="post-job.html"
+                                class="dashboard-primary-btn"
+                            >
+                                + Post New Job
+                            </a>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                const latestJobs =
+                    data.jobs.slice(0, 3);
+
+
+                recentJobs.innerHTML =
+                    latestJobs.map(
+                        function(job) {
+
+                            return `
+
+                                <div class="recent-job-card">
+
+                                    <div class="recent-job-info">
+
+                                        <h3>
+                                            ${job.title}
+                                        </h3>
+
+                                        <p>
+                                            📍
+                                            ${job.location || "Not specified"}
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="recent-job-details">
+
+                                        <span>
+                                            💼
+                                            ${job.job_type || "Not specified"}
+                                        </span>
+
+                                        <span>
+                                            💰
+                                            ${job.salary || "Not specified"}
+                                        </span>
+
+                                    </div>
+
+
+                                    <a
+                                        href="edit-job.html?jobId=${job.id}"
+                                        class="view-job-btn"
+                                    >
+                                        View / Edit
+                                    </a>
+
+                                </div>
+
+                            `;
+
+                        }
+                    ).join("");
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Recent jobs error:",
+                    error
+                );
+
+
+                recentJobs.innerHTML = `
+
+                    <div class="jobs-error">
+
+                        <h3>
+                            Unable to load jobs
+                        </h3>
+
+                        <p>
+                            ${error.message}
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // START DASHBOARD
+        // =========================================
+
+        loadRecruiterDashboard();
+
+        loadRecentJobs();
+
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        const logoutBtn =
+            document.getElementById(
+                "logoutBtn"
+            );
+
+
+        if (logoutBtn) {
+
+            logoutBtn.addEventListener(
+                "click",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+            );
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

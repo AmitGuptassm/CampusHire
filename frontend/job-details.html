@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Job Details | CampusHire</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 CampusHire
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="about.html">About</a>
+            </li>
+
+            <li>
+                <a href="companies.html">Companies</a>
+            </li>
+
+            <li>
+                <a href="jobs.html">Jobs</a>
+            </li>
+
+            <li>
+                <a href="contact.html">Contact</a>
+            </li>
+
+        </ul>
+
+        <div class="nav-buttons">
+
+            <a href="login.html"
+               class="login-btn">
+                Login
+            </a>
+
+            <a href="register.html"
+               class="register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         JOB DETAILS
+    ========================== -->
+
+    <main class="job-details-page">
+
+
+        <a href="jobs.html"
+           class="back-jobs">
+
+            ← Back to Jobs
+
+        </a>
+
+
+        <section
+            class="job-details-card"
+            id="jobDetails">
+
+            <p class="loading-text">
+                Loading job details...
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-section">
+
+                <h2>
+                    🎓 CampusHire
+                </h2>
+
+                <p>
+                    Student Placement Management System
+                </p>
+
+                <p>
+                    Connecting students with career
+                    opportunities and leading recruiters.
+                </p>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="companies.html">
+                    Companies
+                </a>
+
+                <a href="jobs.html">
+                    Jobs
+                </a>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h3>
+                    For Students
+                </h3>
+
+                <a href="register.html">
+                    Register
+                </a>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+                <a href="jobs.html">
+                    Browse Jobs
+                </a>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h3>
+                    Contact Us
+                </h3>
+
+                <p>
+                    📧 placement@campushire.com
+                </p>
+
+                <p>
+                    📞 +91 XXXXX XXXXX
+                </p>
+
+                <p>
+                    📍 New Delhi, India
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 CampusHire. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+<script>
+
+    // Get job ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const jobId = params.get("id");
+
+    const jobDetails = document.getElementById("jobDetails");
+
+
+    // Check job ID
+    if (!jobId) {
+
+        jobDetails.innerHTML = `
+            <div class="no-job-details">
+                <h2>Job Not Found</h2>
+                <p>No job ID was provided.</p>
+                <a href="jobs.html">← Back to Jobs</a>
+            </div>
+        `;
+
+    } else {
+
+        getJob();
+
+    }
+
+
+    // Get job from backend
+    async function getJob() {
+
+        try {
+
+            console.log("Job ID:", jobId);
+
+            const response = await fetch(
+                "http://localhost:3000/api/jobs/" + jobId
+            );
+
+            console.log("Status:", response.status);
+
+            const data = await response.json();
+
+            console.log("Data:", data);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message || "Job not found"
+                );
+
+            }
+
+
+            const job = data.job;
+
+
+            // Skills
+            let skills = "";
+
+            if (job.skills) {
+
+                job.skills.split(",").forEach(skill => {
+
+                    skills += `
+                        <span>${skill.trim()}</span>
+                    `;
+
+                });
+
+            }
+
+
+            // Deadline
+            let deadline = "Not specified";
+
+            if (job.application_deadline) {
+
+                const date =
+                    new Date(job.application_deadline);
+
+                deadline =
+                    date.toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric"
+                    });
+
+            }
+
+
+            // Display job
+            jobDetails.innerHTML = `
+
+                <div class="job-details-header">
+
+                    <div class="job-details-logo">
+
+                        ${
+                            job.company_name
+                            ? job.company_name
+                                .substring(0, 4)
+                                .toUpperCase()
+                            : "COMP"
+                        }
+
+                    </div>
+
+
+                    <div>
+
+                        <div>
+
+    <p class="job-details-company">
+        ${job.company_name || "Company"}
+    </p>
+
+    <h1>
+        ${job.title}
+    </h1>
+
+    <div class="company-mini-info">
+
+        <p>
+            📍
+            ${job.company_location || "Location not specified"}
+        </p>
+
+        ${
+            job.company_website
+                ? `
+                    <a
+                        href="${job.company_website}"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
+                        🌐 Visit Company Website
+
+                    </a>
+                `
+                : ""
+        }
+
+    </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="job-information">
+
+
+                    <div class="job-main-content">
+
+
+                        <section>
+
+                            <h2>
+                                Job Description
+                            </h2>
+
+                            <p>
+
+                                ${
+                                    job.description ||
+                                    "No description available."
+                                }
+
+                            </p>
+
+                        </section>
+
+
+
+                        <section>
+
+                            <h2>
+                                Required Skills
+                            </h2>
+
+                            <div class="job-details-skills">
+
+                                ${skills}
+
+                            </div>
+
+                        </section>
+
+
+
+                        <section>
+
+                            <h2>
+                                Eligibility
+                            </h2>
+
+                            <p>
+
+                                ${
+                                    job.eligibility ||
+                                    "Not specified."
+                                }
+
+                            </p>
+
+                        </section>
+
+
+                    </div>
+
+
+
+                    <aside class="job-sidebar">
+
+
+                        <div class="job-info-box">
+
+                            <h3>
+                                Job Information
+                            </h3>
+
+
+                            <div>
+
+                                <span>
+                                    Salary
+                                </span>
+
+                                <strong>
+
+                                    ${
+                                        job.salary ||
+                                        "Not specified"
+                                    }
+
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Location
+                                </span>
+
+                                <strong>
+
+                                    ${
+                                        job.location ||
+                                        "Not specified"
+                                    }
+
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Experience
+                                </span>
+
+                                <strong>
+
+                                    ${
+                                        job.experience ||
+                                        "Not specified"
+                                    }
+
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Application Deadline
+                                </span>
+
+                                <strong>
+
+                                    ${deadline}
+
+                                </strong>
+
+                            </div>
+
+
+                            <button
+                                id="applyButton"
+                                class="apply-job-btn">
+
+                                Apply Now
+
+                            </button>
+                            <button
+                                id="saveJobButton"
+                                class="save-job-btn"
+                            >
+                                ☆ Save Job
+                            </button>
+
+
+                        </div>
+
+                    </aside>
+
+
+                </div>
+
+            `;
+
+
+            // Apply button
+            document
+                .getElementById("applyButton")
+                .addEventListener("click", () => {
+
+                    applyForJob(job.id);
+
+                });
+            // Save Job button
+
+            document
+                .getElementById("saveJobButton")
+                .addEventListener("click", () => {
+
+                    saveJob(job.id);
+
+    });
+
+
+        } catch (error) {
+
+            console.error(
+                "ERROR:",
+                error
+            );
+
+
+            jobDetails.innerHTML = `
+
+                <div class="no-job-details">
+
+                    <h2>
+                        Unable to Load Job
+                    </h2>
+
+                    <p>
+                        ${error.message}
+                    </p>
+
+                    <a href="jobs.html">
+                        ← Back to Jobs
+                    </a>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+
+    // =========================================
+    // APPLY FOR JOB
+    // =========================================
+
+    async function applyForJob(jobId) {
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            alert(
+                "Please login as a student to apply."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        const user =
+            JSON.parse(storedUser);
+
+
+        if (user.role !== "student") {
+
+            alert(
+                "Only students can apply for jobs."
+            );
+
+            return;
+
+        }
+
+
+        const confirmApply =
+            confirm(
+                "Are you sure you want to apply for this job?"
+            );
+
+
+        if (!confirmApply) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://localhost:3000/api/applications",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            studentId:
+                                user.id,
+
+                            jobId:
+                                jobId
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (response.ok) {
+
+                alert(
+                    data.message
+                );
+
+            }
+
+            else {
+
+                alert(
+                    data.message ||
+                    "Unable to apply."
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Unable to connect to server."
+            );
+
+        }
+
+    }
+// =========================================
+// SAVE JOB
+// =========================================
+
+async function saveJob(jobId) {
+
+    const storedUser =
+        localStorage.getItem("user");
+
+
+    if (!storedUser) {
+
+        alert(
+            "Please login first."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    const user =
+        JSON.parse(storedUser);
+
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/saved-jobs",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            student_id:
+                                user.id,
+
+                            job_id:
+                                jobId
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status === 409
+        ) {
+
+            alert(
+                "Job is already saved."
+            );
+
+            return;
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to save job."
+            );
+
+        }
+
+
+        alert(
+            "Job saved successfully!"
+        );
+
+
+        const saveButton =
+            document.getElementById(
+                "saveJobButton"
+            );
+
+
+        saveButton.innerHTML =
+            "✓ Saved";
+
+
+        saveButton.classList.add(
+            "saved"
+        );
+
+
+        saveButton.disabled =
+            true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Save job error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Something went wrong."
+        );
+
+    }
+
+}
+</script>
+
+
+</body>
+
+</html>

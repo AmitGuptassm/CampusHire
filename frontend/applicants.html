@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Applicants | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="applicants-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="recruiter-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="post-job.html">
+                ➕ Post a Job
+            </a>
+
+            <a href="my-jobs.html">
+                💼 My Posted Jobs
+            </a>
+
+            <a
+                href="applicants.html"
+                class="active"
+            >
+                📋 Applicants
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a
+                href="#"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="applicants-main">
+
+
+        <!-- HEADER -->
+
+        <header class="applicants-header">
+
+            <div>
+
+                <p class="dashboard-label">
+                    RECRUITMENT
+                </p>
+
+                <h1>
+                    Job Applicants
+                </h1>
+
+                <p id="jobInfo">
+                    Loading applicants...
+                </p>
+
+            </div>
+
+
+            <a
+                href="my-jobs.html"
+                class="back-dashboard-btn"
+            >
+                ← Back to My Jobs
+            </a>
+
+        </header>
+
+
+
+        <!-- =========================
+             APPLICANTS LIST
+        ========================== -->
+
+        <section class="applicants-section">
+
+
+            <div
+                id="applicantsList"
+                class="applicants-list"
+            >
+
+                <p class="applicants-loading">
+                    Loading applicants...
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        // =========================================
+        // CHECK RECRUITER ROLE
+        // =========================================
+
+        if (user && user.role !== "recruiter") {
+
+            alert(
+                "Only recruiters can access this page."
+            );
+
+            window.location.href =
+                "student-dashboard.html";
+
+        }
+
+
+        // =========================================
+        // DISPLAY NAME
+        // =========================================
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+        // =========================================
+        // GET JOB ID FROM URL
+        // =========================================
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const jobId =
+            urlParams.get("jobId");
+
+
+        if (!jobId) {
+
+            window.location.href =
+                "my-jobs.html";
+
+        }
+
+
+        // =========================================
+        // LOAD APPLICANTS
+        // =========================================
+
+        async function loadApplicants() {
+
+            const applicantsList =
+                document.getElementById(
+                    "applicantsList"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/jobs/${jobId}/applicants`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load applicants."
+                    );
+
+                }
+
+
+                const applicants =
+                    data.applicants || [];
+
+
+                document.getElementById(
+                    "jobInfo"
+                ).textContent =
+                    `${applicants.length} applicant(s) found`;
+
+
+                displayApplicants(
+                    applicants
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Applicants loading error:",
+                    error
+                );
+
+
+                applicantsList.innerHTML = `
+
+                    <div class="applicants-empty">
+
+                        <div class="empty-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>
+                            Unable to load applicants
+                        </h3>
+
+                        <p>
+                            Please check the backend server.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // DISPLAY APPLICANTS
+        // =========================================
+
+        function displayApplicants(applicants) {
+
+            const applicantsList =
+                document.getElementById(
+                    "applicantsList"
+                );
+
+
+            applicantsList.innerHTML = "";
+
+
+            // NO APPLICANTS
+
+            if (applicants.length === 0) {
+
+                applicantsList.innerHTML = `
+
+                    <div class="applicants-empty">
+
+                        <div class="empty-icon">
+                            📭
+                        </div>
+
+                        <h3>
+                            No Applicants Yet
+                        </h3>
+
+                        <p>
+                            Students have not applied
+                            for this job yet.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            // APPLICANT CARDS
+
+            applicants.forEach(
+                applicant => {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "applicant-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="applicant-avatar">
+
+                            ${getInitials(
+                                applicant.full_name
+                            )}
+
+                        </div>
+
+
+                        <div class="applicant-details">
+
+                            <h3>
+
+                                ${applicant.full_name}
+
+                            </h3>
+
+
+                            <p class="applicant-contact">
+
+                                📧 ${applicant.email}
+
+                                &nbsp;&nbsp;
+
+                                📱 ${applicant.phone || "Not provided"}
+
+                            </p>
+
+
+                            <div class="applicant-info">
+
+                                <span>
+                                    🎓 ${applicant.college || "College not added"}
+                                </span>
+
+                                <span>
+                                    📚 ${applicant.course || "Course not added"}
+                                </span>
+
+                            </div>
+
+
+                            <p class="applicant-skills">
+
+                                <strong>
+                                    Skills:
+                                </strong>
+
+                                ${applicant.skills || "Not added"}
+
+                            </p>
+
+
+                            <p class="applicant-date">
+
+                                Applied:
+                                ${formatDate(
+                                    applicant.applied_at
+                                )}
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="applicant-actions">
+
+<select
+    class="status-select"
+    onchange="updateApplicationStatus(
+        ${applicant.application_id},
+        this
+    )"
+>
+    <option
+        value="Applied"
+        ${
+            applicant.status === "Applied"
+                ? "selected"
+                : ""
+        }
+    >
+        Applied
+    </option>
+
+    <option
+        value="Shortlisted"
+        ${
+            applicant.status === "Shortlisted"
+                ? "selected"
+                : ""
+        }
+    >
+        Shortlisted
+    </option>
+
+    <option
+        value="Selected"
+        ${
+            applicant.status === "Selected"
+                ? "selected"
+                : ""
+        }
+    >
+        Selected
+    </option>
+
+    <option
+        value="Rejected"
+        ${
+            applicant.status === "Rejected"
+                ? "selected"
+                : ""
+        }
+    >
+        Rejected
+    </option>
+
+</select>
+
+
+                            <button
+                                class="resume-btn"
+                                onclick="viewResume(
+                                    '${applicant.resume || ""}'
+                                )"
+                            >
+                                View Resume
+                            </button>
+
+                        </div>
+
+                    `;
+
+
+                    applicantsList.appendChild(
+                        card
+                    );
+
+                }
+
+            );
+
+        }
+
+
+
+        // =========================================
+        // GET INITIALS
+        // =========================================
+
+        function getInitials(name) {
+
+            if (!name) {
+
+                return "U";
+
+            }
+
+
+            return name
+                .split(" ")
+                .map(
+                    word =>
+                        word.charAt(0)
+                )
+                .join("")
+                .substring(0, 2)
+                .toUpperCase();
+
+        }
+
+
+
+        // =========================================
+        // STATUS CLASS
+        // =========================================
+
+        function getStatusClass(status) {
+
+            if (!status) {
+
+                return "status-applied";
+
+            }
+
+
+            return (
+                "status-" +
+                status
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+            );
+
+        }
+
+
+
+        // =========================================
+        // VIEW RESUME
+        // =========================================
+
+        function viewResume(resume) {
+
+            if (!resume) {
+
+                alert(
+                    "Resume has not been uploaded yet."
+                );
+
+                return;
+
+            }
+
+
+            window.open(
+                resume,
+                "_blank"
+            );
+
+        }
+
+
+
+        // =========================================
+        // FORMAT DATE
+        // =========================================
+
+        function formatDate(dateString) {
+
+            if (!dateString) {
+
+                return "Not specified";
+
+            }
+
+
+            const date =
+                new Date(dateString);
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+
+                }
+            );
+
+        }
+
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+// =========================================
+// UPDATE APPLICATION STATUS
+// =========================================
+
+async function updateApplicationStatus(
+    applicationId,
+    selectElement
+) {
+
+    const newStatus =
+        selectElement.value;
+
+
+    try {
+
+        selectElement.disabled =
+            true;
+
+
+        const response =
+            await fetch(
+
+                `http://localhost:3000/api/applications/${applicationId}/status`,
+
+                {
+
+                    method: "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            status:
+                                newStatus
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.message ||
+                "Unable to update status."
+
+            );
+
+        }
+
+
+        alert(
+            "Status updated successfully!"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Status update error:",
+            error
+        );
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+    finally {
+
+        selectElement.disabled =
+            false;
+
+    }
+
+}
+        // START
+
+        loadApplicants();
+
+
+    </script>
+
+</body>
+
+</html>

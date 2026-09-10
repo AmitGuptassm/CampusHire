@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Company Profile | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="recruiter-profile-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="recruiter-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="post-job.html">
+                ➕ Post a Job
+            </a>
+
+            <a href="my-jobs.html">
+                💼 My Posted Jobs
+            </a>
+
+            <a href="recruiter-profile.html"
+               class="active">
+                🏢 Company Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a
+                href="login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="recruiter-profile-main">
+
+
+        <header class="recruiter-profile-header">
+
+            <div>
+
+                <p class="dashboard-label">
+                    COMPANY PROFILE
+                </p>
+
+                <h1>
+                    Company Profile
+                </h1>
+
+                <p>
+                    Manage your company information and
+                    help students know more about you.
+                </p>
+
+            </div>
+
+
+            <a
+                href="recruiter-dashboard.html"
+                class="back-dashboard-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </header>
+
+
+
+        <!-- =========================
+             PROFILE FORM
+        ========================== -->
+
+        <section class="recruiter-profile-section">
+
+
+            <div class="profile-section-heading">
+
+                <div>
+
+                    <h2>
+                        Company Information
+                    </h2>
+
+                    <p>
+                        Keep your company details accurate
+                        and up to date.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <form id="recruiterProfileForm">
+
+
+                <!-- COMPANY NAME -->
+
+                <div class="form-group">
+
+                    <label for="companyName">
+                        Company Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="companyName"
+                        placeholder="Enter company name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- WEBSITE -->
+
+                <div class="form-group">
+
+                    <label for="companyWebsite">
+                        Company Website
+                    </label>
+
+                    <input
+                        type="url"
+                        id="companyWebsite"
+                        placeholder="https://example.com"
+                    >
+
+                </div>
+
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="companyLocation">
+                        Company Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="companyLocation"
+                        placeholder="Example: Noida, Uttar Pradesh"
+                    >
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="companyDescription">
+                        Company Description
+                    </label>
+
+                    <textarea
+                        id="companyDescription"
+                        rows="6"
+                        placeholder="Tell students about your company..."
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- SAVE BUTTON -->
+
+                <div class="profile-buttons">
+
+                    <button
+                        type="submit"
+                        id="saveRecruiterProfileBtn"
+                        class="save-profile-btn"
+                    >
+                        Save Company Profile
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        // =========================================
+        // CHECK RECRUITER ROLE
+        // =========================================
+
+        if (user && user.role !== "recruiter") {
+
+            alert(
+                "Only recruiters can access this page."
+            );
+
+            window.location.href =
+                "student-dashboard.html";
+
+        }
+
+
+        // =========================================
+        // DISPLAY RECRUITER NAME
+        // =========================================
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+        // =========================================
+        // LOAD EXISTING PROFILE
+        // =========================================
+
+        async function loadRecruiterProfile() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/recruiter/profile/${user.id}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load company profile."
+                    );
+
+                }
+
+
+                const profile =
+                    data.profile;
+
+
+                if (!profile) {
+
+                    return;
+
+                }
+
+
+                document.getElementById(
+                    "companyName"
+                ).value =
+                    profile.company_name || "";
+
+
+                document.getElementById(
+                    "companyWebsite"
+                ).value =
+                    profile.company_website || "";
+
+
+                document.getElementById(
+                    "companyLocation"
+                ).value =
+                    profile.company_location || "";
+
+
+                document.getElementById(
+                    "companyDescription"
+                ).value =
+                    profile.company_description || "";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Profile loading error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        // =========================================
+        // SAVE PROFILE
+        // =========================================
+
+        document.getElementById(
+            "recruiterProfileForm"
+        ).addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const saveButton =
+                    document.getElementById(
+                        "saveRecruiterProfileBtn"
+                    );
+
+
+                const profileData = {
+
+                    recruiterId:
+                        user.id,
+
+                    companyName:
+                        document.getElementById(
+                            "companyName"
+                        ).value.trim(),
+
+                    companyWebsite:
+                        document.getElementById(
+                            "companyWebsite"
+                        ).value.trim(),
+
+                    companyLocation:
+                        document.getElementById(
+                            "companyLocation"
+                        ).value.trim(),
+
+                    companyDescription:
+                        document.getElementById(
+                            "companyDescription"
+                        ).value.trim()
+
+                };
+
+
+                try {
+
+                    saveButton.disabled = true;
+
+                    saveButton.textContent =
+                        "Saving...";
+
+
+                    const response =
+                        await fetch(
+                            "http://localhost:3000/api/recruiter/profile",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify(
+                                        profileData
+                                    )
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            "Unable to save company profile."
+                        );
+
+                    }
+
+
+                    alert(
+                        data.message
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Profile save error:",
+                        error
+                    );
+
+                    alert(
+                        error.message
+                    );
+
+                }
+
+                finally {
+
+                    saveButton.disabled = false;
+
+                    saveButton.textContent =
+                        "Save Company Profile";
+
+                }
+
+            }
+        );
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        loadRecruiterProfile();
+
+
+    </script>
+
+
+</body>
+
+</html>

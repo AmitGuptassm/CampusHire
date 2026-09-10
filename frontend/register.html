@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register | CampusHire</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body class="register-page">
+
+
+    <!-- =========================
+         REGISTER CONTAINER
+    ========================== -->
+
+    <div class="register-container">
+
+
+        <!-- =========================
+             LEFT SIDE
+        ========================== -->
+
+        <div class="register-left">
+
+            <div class="register-brand">
+
+                <h1>
+                    🎓 CampusHire
+                </h1>
+
+                <p>
+                    Student Placement Management System
+                </p>
+
+            </div>
+
+
+            <div class="register-message">
+
+                <h2>
+                    Start Your Journey
+                </h2>
+
+                <p>
+                    Create your account and connect with
+                    opportunities that can shape your career.
+                </p>
+
+            </div>
+
+
+            <div class="register-features">
+
+                <div>
+                    ✓ Discover Placement Opportunities
+                </div>
+
+                <div>
+                    ✓ Build Your Professional Profile
+                </div>
+
+                <div>
+                    ✓ Apply to Companies
+                </div>
+
+                <div>
+                    ✓ Track Your Applications
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             RIGHT SIDE
+        ========================== -->
+
+        <div class="register-right">
+
+            <div class="register-form-container">
+
+
+                <h2>
+                    Create Account
+                </h2>
+
+
+                <p class="register-subtitle">
+                    Register to get started with CampusHire
+                </p>
+
+
+
+                <!-- =========================
+                     REGISTER FORM
+                ========================== -->
+
+                <form id="registerForm">
+
+
+                    <!-- =========================
+                         ACCOUNT TYPE
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="accountType">
+                            Register As
+                        </label>
+
+                        <select
+                            id="accountType"
+                            required>
+
+                            <option value="student">
+                                Student
+                            </option>
+
+                            <option value="recruiter">
+                                Recruiter
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         FULL NAME
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="Enter your full name"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         EMAIL
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         PHONE
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="Enter your phone number"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         PASSWORD
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create a password"
+                            minlength="6"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         CONFIRM PASSWORD
+                    ========================== -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                            minlength="6"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         TERMS
+                    ========================== -->
+
+                    <div class="terms">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required>
+
+                        <label for="terms">
+
+                            I agree to the
+
+                            <a href="#">
+                                Terms & Conditions
+                            </a>
+
+                            and
+
+                            <a href="#">
+                                Privacy Policy
+                            </a>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         REGISTER BUTTON
+                    ========================== -->
+
+                    <button
+                        type="submit"
+                        class="register-submit">
+
+                        Create Account
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- =========================
+                     LOGIN
+                ========================== -->
+
+                <p class="login-text">
+
+                    Already have an account?
+
+                    <a href="login.html">
+                        Login
+                    </a>
+
+                </p>
+
+
+
+                <!-- =========================
+                     BACK HOME
+                ========================== -->
+
+                <a
+                    href="index.html"
+                    class="back-home">
+
+                    ← Back to Home
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        // Get registration form
+
+        const registerForm =
+            document.getElementById("registerForm");
+
+
+        // Submit event
+
+        registerForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                // Prevent normal form submission
+
+                event.preventDefault();
+
+
+                // Get values
+
+                const fullName =
+                    document
+                    .getElementById("fullName")
+                    .value
+                    .trim();
+
+
+                const email =
+                    document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+
+                const phone =
+                    document
+                    .getElementById("phone")
+                    .value
+                    .trim();
+
+
+                const password =
+                    document
+                    .getElementById("password")
+                    .value;
+
+
+                const confirmPassword =
+                    document
+                    .getElementById("confirmPassword")
+                    .value;
+
+
+                const role =
+                    document
+                    .getElementById("accountType")
+                    .value;
+
+
+
+                // =========================
+                // CHECK PASSWORD
+                // =========================
+
+                if (password !== confirmPassword) {
+
+                    alert(
+                        "Passwords do not match!"
+                    );
+
+                    return;
+
+                }
+
+
+
+                // =========================
+                // CHECK PHONE
+                // =========================
+
+                if (!/^[0-9]{10}$/.test(phone)) {
+
+                    alert(
+                        "Please enter a valid 10-digit phone number."
+                    );
+
+                    return;
+
+                }
+
+
+
+                // =========================
+                // SEND DATA TO BACKEND
+                // =========================
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://localhost:3000/api/register",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body: JSON.stringify({
+
+                                    fullName:
+                                        fullName,
+
+                                    email:
+                                        email,
+
+                                    phone:
+                                        phone,
+
+                                    password:
+                                        password,
+
+                                    role:
+                                        role
+
+                                })
+
+                            }
+                        );
+
+
+
+                    // Convert response to JSON
+
+                    const data =
+                        await response.json();
+
+
+
+                    // =========================
+                    // SUCCESS
+                    // =========================
+
+                    if (response.ok) {
+
+                        alert(
+                            data.message
+                        );
+
+
+                        // Clear form
+
+                        registerForm.reset();
+
+
+                        // Go to login page
+
+                        window.location.href =
+                            "login.html";
+
+                    }
+
+
+                    // =========================
+                    // ERROR
+                    // =========================
+
+                    else {
+
+                        alert(
+                            data.message ||
+                            "Registration failed."
+                        );
+
+                    }
+
+                }
+
+
+                // =========================
+                // SERVER CONNECTION ERROR
+                // =========================
+
+                catch (error) {
+
+                    console.error(
+                        "Registration Error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Unable to connect to the server. " +
+                        "Make sure your backend is running."
+                    );
+
+                }
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+</html>

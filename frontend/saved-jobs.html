@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Saved Jobs | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <style>
+
+        /* =====================================
+           SAVED JOBS PAGE - ISOLATED LAYOUT
+        ===================================== */
+
+        body.saved-jobs-page {
+            margin: 0;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+
+
+        .saved-jobs-page .saved-jobs-layout {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+
+        /* =====================================
+           SIDEBAR
+        ===================================== */
+
+        .saved-jobs-page .sidebar {
+            width: 300px;
+            min-width: 300px;
+            min-height: 100vh;
+
+            box-sizing: border-box;
+
+            position: relative;
+
+            flex-shrink: 0;
+
+            background: #25345d;
+            color: white;
+
+            z-index: 10;
+        }
+
+
+        .saved-jobs-page .sidebar-logo {
+            padding: 30px;
+
+            box-sizing: border-box;
+
+            font-size: 28px;
+            font-weight: 700;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.1);
+        }
+
+
+        .saved-jobs-page .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+
+            padding: 28px 14px;
+        }
+
+
+        .saved-jobs-page .sidebar-nav a {
+            display: block;
+
+            padding: 16px 20px;
+
+            box-sizing: border-box;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            color: #ffffff;
+
+            font-size: 16px;
+        }
+
+
+        .saved-jobs-page .sidebar-nav a:hover,
+        .saved-jobs-page .sidebar-nav a.active {
+            background: #334a8b;
+        }
+
+
+        /* =====================================
+           MAIN CONTENT
+        ===================================== */
+
+        .saved-jobs-page .saved-main {
+            flex: 1;
+
+            width: 0;
+            min-width: 0;
+
+            min-height: 100vh;
+
+            box-sizing: border-box;
+
+            padding: 45px 50px;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .saved-jobs-page .saved-header {
+            margin-bottom: 35px;
+        }
+
+
+        .saved-jobs-page .saved-header-label {
+            margin: 0 0 10px;
+
+            color: #2563eb;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 3px;
+        }
+
+
+        .saved-jobs-page .saved-header h1 {
+            margin: 0 0 10px;
+
+            color: #1e293b;
+
+            font-size: 38px;
+        }
+
+
+        .saved-jobs-page .saved-header p {
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================
+           SECTION
+        ===================================== */
+
+        .saved-jobs-page .saved-jobs-section {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 28px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 16px;
+        }
+
+
+        /* =====================================
+           SAVED JOBS LIST
+        ===================================== */
+
+        .saved-jobs-page #savedJobsList {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 18px;
+        }
+
+
+        /* =====================================
+           SAVED JOB CARD
+        ===================================== */
+
+        .saved-jobs-page .saved-job-card {
+            display: flex !important;
+
+            flex-direction: row !important;
+
+            align-items: center !important;
+
+            justify-content: space-between !important;
+
+            width: 100% !important;
+
+            max-width: 100% !important;
+
+            min-width: 0 !important;
+
+            box-sizing: border-box !important;
+
+            padding: 25px 28px !important;
+
+            margin: 0 !important;
+
+            gap: 30px !important;
+
+            background: #ffffff !important;
+
+            border: 1px solid #e2e8f0 !important;
+
+            border-radius: 14px !important;
+
+            position: relative !important;
+
+            left: auto !important;
+
+            transform: none !important;
+
+            overflow: visible !important;
+        }
+
+
+        /* =====================================
+           JOB INFORMATION
+        ===================================== */
+
+        .saved-jobs-page .saved-job-info {
+            display: block !important;
+
+            flex: 1 1 auto !important;
+
+            width: auto !important;
+
+            min-width: 0 !important;
+
+            max-width: none !important;
+
+            margin: 0 !important;
+
+            padding: 0 !important;
+
+            position: static !important;
+
+            transform: none !important;
+
+            overflow: visible !important;
+        }
+
+
+        .saved-jobs-page .saved-job-info h3 {
+            display: block !important;
+
+            margin: 0 0 14px !important;
+
+            padding: 0 !important;
+
+            color: #1e293b !important;
+
+            font-size: 22px !important;
+
+            font-weight: 700 !important;
+
+            line-height: 1.3 !important;
+
+            text-align: left !important;
+
+            position: static !important;
+
+            transform: none !important;
+        }
+
+
+        /* =====================================
+           JOB META
+        ===================================== */
+
+        .saved-jobs-page .saved-job-meta {
+            display: flex !important;
+
+            flex-direction: row !important;
+
+            flex-wrap: wrap !important;
+
+            align-items: center !important;
+
+            justify-content: flex-start !important;
+
+            width: 100% !important;
+
+            gap: 10px 18px !important;
+
+            margin: 0 !important;
+
+            padding: 0 !important;
+
+            color: #64748b !important;
+
+            font-size: 15px !important;
+
+            position: static !important;
+
+            transform: none !important;
+
+            overflow: visible !important;
+        }
+
+
+        .saved-jobs-page .saved-job-meta span {
+            display: inline-flex !important;
+
+            width: auto !important;
+
+            margin: 0 !important;
+
+            padding: 0 !important;
+
+            white-space: normal !important;
+
+            position: static !important;
+
+            transform: none !important;
+        }
+
+
+        /* =====================================
+           ACTIONS
+        ===================================== */
+
+        .saved-jobs-page .saved-job-actions {
+            display: flex !important;
+
+            flex-direction: row !important;
+
+            align-items: center !important;
+
+            justify-content: flex-end !important;
+
+            flex: 0 0 auto !important;
+
+            width: auto !important;
+
+            min-width: max-content !important;
+
+            margin: 0 !important;
+
+            padding: 0 !important;
+
+            gap: 12px !important;
+
+            position: static !important;
+
+            transform: none !important;
+        }
+
+
+        /* VIEW BUTTON */
+
+        .saved-jobs-page .saved-view-btn {
+            display: inline-flex !important;
+
+            align-items: center !important;
+
+            justify-content: center !important;
+
+            min-width: 105px !important;
+
+            padding: 11px 18px !important;
+
+            box-sizing: border-box !important;
+
+            text-decoration: none !important;
+
+            border: none !important;
+
+            border-radius: 8px !important;
+
+            background: #2563eb !important;
+
+            color: #ffffff !important;
+
+            font-size: 14px !important;
+
+            font-weight: 600 !important;
+
+            white-space: nowrap !important;
+        }
+
+
+        .saved-jobs-page .saved-view-btn:hover {
+            background: #1d4ed8 !important;
+        }
+
+
+        /* REMOVE BUTTON */
+
+        .saved-jobs-page .saved-remove-btn {
+            display: inline-flex !important;
+
+            align-items: center !important;
+
+            justify-content: center !important;
+
+            min-width: 105px !important;
+
+            padding: 11px 18px !important;
+
+            box-sizing: border-box !important;
+
+            border: none !important;
+
+            border-radius: 8px !important;
+
+            background: #fee2e2 !important;
+
+            color: #dc2626 !important;
+
+            font-size: 14px !important;
+
+            font-weight: 600 !important;
+
+            white-space: nowrap !important;
+
+            cursor: pointer !important;
+        }
+
+
+        .saved-jobs-page .saved-remove-btn:hover {
+            background: #dc2626 !important;
+
+            color: #ffffff !important;
+        }
+
+
+        /* =====================================
+           EMPTY / ERROR
+        ===================================== */
+
+        .saved-jobs-page .saved-empty {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 60px 30px;
+
+            text-align: center;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            color: #64748b;
+        }
+
+
+        .saved-jobs-page .saved-empty h3 {
+            margin-top: 0;
+
+            color: #1e293b;
+        }
+
+
+        .saved-jobs-page .saved-empty a {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (max-width: 900px) {
+
+            .saved-jobs-page .sidebar {
+                width: 240px;
+
+                min-width: 240px;
+            }
+
+
+            .saved-jobs-page .saved-main {
+                padding: 35px 25px;
+            }
+
+
+            .saved-jobs-page .saved-job-card {
+                flex-direction: column !important;
+
+                align-items: flex-start !important;
+            }
+
+
+            .saved-jobs-page .saved-job-actions {
+                width: 100% !important;
+
+                justify-content: flex-start !important;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .saved-jobs-page .saved-jobs-layout {
+                display: block;
+            }
+
+
+            .saved-jobs-page .sidebar {
+                width: 100%;
+
+                min-width: 100%;
+
+                min-height: auto;
+            }
+
+
+            .saved-jobs-page .sidebar-nav {
+                padding: 15px;
+            }
+
+
+            .saved-jobs-page .saved-main {
+                width: 100%;
+
+                padding: 25px 15px;
+            }
+
+
+            .saved-jobs-page .saved-jobs-section {
+                padding: 15px;
+            }
+
+
+            .saved-jobs-page .saved-job-actions {
+                flex-wrap: wrap;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="saved-jobs-page">
+
+
+    <div class="saved-jobs-layout">
+
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <aside class="sidebar">
+
+
+            <div class="sidebar-logo">
+
+                🎓 CampusHire
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+
+                <a href="student-dashboard.html">
+
+                    🏠 Dashboard
+
+                </a>
+
+
+                <a href="jobs.html">
+
+                    💼 Find Jobs
+
+                </a>
+
+
+                <a href="my-applications.html">
+
+                    📄 My Applications
+
+                </a>
+
+
+                <a
+                    href="saved-jobs.html"
+                    class="active"
+                >
+
+                    ⭐ Saved Jobs
+
+                </a>
+
+
+                <a href="profile.html">
+
+                    👤 Profile
+
+                </a>
+
+
+                <a
+                    href="login.html"
+                    id="logoutButton"
+                >
+
+                    🚪 Logout
+
+                </a>
+
+
+            </nav>
+
+
+        </aside>
+
+
+
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
+        <main class="saved-main">
+
+
+            <header class="saved-header">
+
+                <p class="saved-header-label">
+
+                    SAVED JOBS
+
+                </p>
+
+
+                <h1>
+
+                    Saved Jobs
+
+                </h1>
+
+
+                <p>
+
+                    Jobs you have saved for later.
+
+                </p>
+
+            </header>
+
+
+
+            <section class="saved-jobs-section">
+
+
+                <div id="savedJobsList">
+
+                    Loading saved jobs...
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+
+        // =========================================
+        // CHECK STUDENT ROLE
+        // =========================================
+
+        if (
+            user &&
+            user.role !== "student"
+        ) {
+
+            alert(
+                "Only students can access this page."
+            );
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+
+        // =========================================
+        // LOAD SAVED JOBS
+        // =========================================
+
+        async function loadSavedJobs() {
+
+
+            const savedJobsList =
+                document.getElementById(
+                    "savedJobsList"
+                );
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/saved-jobs/${user.id}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load saved jobs."
+                    );
+
+                }
+
+
+                const savedJobs =
+                    data.savedJobs || [];
+
+
+                // =====================================
+                // NO SAVED JOBS
+                // =====================================
+
+                if (
+                    savedJobs.length === 0
+                ) {
+
+                    savedJobsList.innerHTML = `
+
+                        <div class="saved-empty">
+
+                            <h3>
+                                No Saved Jobs
+                            </h3>
+
+                            <p>
+                                You have not saved any jobs yet.
+                            </p>
+
+                            <a href="jobs.html">
+
+                                Find Jobs
+
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    return;
+
+                }
+
+
+
+                // =====================================
+                // DISPLAY SAVED JOBS
+                // =====================================
+
+                savedJobsList.innerHTML =
+                    savedJobs.map(
+                        function(job) {
+
+
+                            return `
+
+                                <article
+                                    class="saved-job-card"
+                                >
+
+
+                                    <div
+                                        class="saved-job-info"
+                                    >
+
+
+                                        <h3>
+
+                                            ${
+                                                job.title ||
+                                                "Job Title"
+                                            }
+
+                                        </h3>
+
+
+                                        <div
+                                            class="saved-job-meta"
+                                        >
+
+
+                                            <span>
+
+                                                🏢 ${
+                                                    job.company_name ||
+                                                    "Company"
+                                                }
+
+                                            </span>
+
+
+                                            <span>
+
+                                                📍 ${
+                                                    job.location ||
+                                                    "Not specified"
+                                                }
+
+                                            </span>
+
+
+                                            <span>
+
+                                                💼 ${
+                                                    job.job_type ||
+                                                    "Not specified"
+                                                }
+
+                                            </span>
+
+
+                                            <span>
+
+                                                💰 ${
+                                                    job.salary ||
+                                                    "Not specified"
+                                                }
+
+                                            </span>
+
+
+                                        </div>
+
+
+                                    </div>
+
+
+
+                                    <div
+                                        class="saved-job-actions"
+                                    >
+
+
+                                        <a
+                                            href="job-details.html?id=${job.job_id}"
+                                            class="saved-view-btn"
+                                        >
+
+                                            View Job
+
+                                        </a>
+
+
+                                        <button
+                                            class="saved-remove-btn"
+                                            onclick="removeSavedJob(${job.job_id})"
+                                        >
+
+                                            Remove
+
+                                        </button>
+
+
+                                    </div>
+
+
+                                </article>
+
+                            `;
+
+                        }
+                    ).join("");
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Saved jobs loading error:",
+                    error
+                );
+
+
+                savedJobsList.innerHTML = `
+
+                    <div class="saved-empty">
+
+                        <h3>
+
+                            Unable to Load Saved Jobs
+
+                        </h3>
+
+
+                        <p>
+
+                            ${error.message}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+
+            }
+
+
+        }
+
+
+
+        // =========================================
+        // REMOVE SAVED JOB
+        // =========================================
+
+        async function removeSavedJob(
+            jobId
+        ) {
+
+
+            const confirmed =
+                confirm(
+                    "Remove this job from saved jobs?"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/saved-jobs/${user.id}/${jobId}`,
+                        {
+
+                            method:
+                                "DELETE"
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to remove saved job."
+                    );
+
+                }
+
+
+                loadSavedJobs();
+
+
+            }
+
+            catch (error) {
+
+                alert(
+                    error.message
+                );
+
+            }
+
+
+        }
+
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document
+            .getElementById(
+                "logoutButton"
+            )
+            .addEventListener(
+                "click",
+                function(event) {
+
+
+                    event.preventDefault();
+
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+
+                }
+            );
+
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        loadSavedJobs();
+
+
+    </script>
+
+
+</body>
+
+</html>

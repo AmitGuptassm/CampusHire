@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Manage Applicants | CampusHire</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="manage-applicants-page">
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+      <div class="sidebar-logo">🎓 CampusHire</div>
+
+      <div class="sidebar-user">
+        <div class="user-avatar">💼</div>
+
+        <div>
+          <h3 id="sidebarName">Recruiter</h3>
+
+          <p>Recruiter</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="recruiter-dashboard.html"> 🏠 Dashboard </a>
+
+        <a href="post-job.html"> ➕ Post a Job </a>
+
+        <a href="manage-jobs.html"> 💼 Manage Jobs </a>
+
+        <a href="manage-applicants.html" class="active"> 👥 View Applicants </a>
+
+        <a href="company-profile.html"> 🏢 Company Profile </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="index.html"> 🏠 Back to Website </a>
+
+        <a href="#" id="logoutBtn"> 🚪 Logout </a>
+      </div>
+    </aside>
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="manage-applicants-main">
+      <header class="manage-applicants-header">
+        <div>
+          <p class="dashboard-label">RECRUITMENT</p>
+
+          <h1>Manage Applicants</h1>
+
+          <p>Review candidates who have applied for your job postings.</p>
+        </div>
+      </header>
+
+      <!-- =========================
+             APPLICANTS LIST
+        ========================== -->
+
+      <section class="applicants-section">
+        <div class="applicants-section-header">
+          <div>
+            <h2>Job Applications</h2>
+
+            <p>All candidates who applied to your jobs.</p>
+          </div>
+        </div>
+
+        <div id="applicantsList" class="applicants-list">
+          <div class="applicants-loading">Loading applicants...</div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const storedUser = localStorage.getItem("user");
+
+      if (!storedUser) {
+        window.location.href = "login.html";
+      }
+
+      let user;
+
+      try {
+        user = JSON.parse(storedUser);
+      } catch (error) {
+        localStorage.removeItem("user");
+
+        window.location.href = "login.html";
+      }
+
+      if (user && user.role !== "recruiter") {
+        alert("Only recruiters can access this page.");
+
+        window.location.href = "login.html";
+      }
+
+      document.getElementById("sidebarName").textContent = user.full_name;
+
+      // =========================================
+      // LOGOUT
+      // =========================================
+
+      // =========================================
+      // LOAD APPLICANTS
+      // =========================================
+
+      const applicantsList = document.getElementById("applicantsList");
+
+      async function loadApplicants() {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/recruiter/applicants/${user.id}`,
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || "Unable to load applicants.");
+          }
+
+          if (!data.applicants || data.applicants.length === 0) {
+            applicantsList.innerHTML = `
+
+                <div class="no-applicants">
+
+                    <div class="empty-icon">
+
+                        📭
+
+                    </div>
+
+                    <h2>
+
+                        No Applicants Yet
+
+                    </h2>
+
+                    <p>
+
+                        No students have applied
+                        to your job postings yet.
+
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+          }
+
+          applicantsList.innerHTML = data.applicants
+            .map(function (applicant) {
+              return `
+
+                        <div class="applicant-card">
+
+
+                            <div class="applicant-info">
+
+
+                                <div class="applicant-avatar">
+
+                                    ${applicant.full_name
+                                      .charAt(0)
+                                      .toUpperCase()}
+
+                                </div>
+
+
+                                <div class="applicant-details">
+
+                                    <h3>
+
+                                        ${applicant.full_name}
+
+                                    </h3>
+
+
+                                    <p class="applicant-email">
+
+                                        📧 ${applicant.email}
+
+                                    </p>
+
+
+                                    <p>
+
+                                        🏫
+                                        ${applicant.college || "Not provided"}
+
+                                        •
+                                        ${applicant.course || "Course not provided"}
+
+                                    </p>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="application-job">
+
+                                <span class="application-label">
+
+                                    Applied for
+
+                                </span>
+
+
+                                <h3>
+
+                                    ${applicant.job_title}
+
+                                </h3>
+
+
+                                <p>
+
+                                    📍
+                                    ${applicant.job_location}
+
+                                </p>
+
+                            </div>
+
+
+                            <div class="application-status">
+
+                                <span>
+
+                                    Current Status
+
+                                </span>
+
+
+                                <select
+    class="status-select"
+    onchange="
+        updateApplicationStatus(
+            ${applicant.application_id},
+            this.value
+        )
+    "
+>
+
+                                    <option
+                                        value="Pending"
+                                        ${
+                                          applicant.status === "Pending"
+                                            ? "selected"
+                                            : ""
+                                        }
+                                    >
+
+                                        Pending
+
+                                    </option>
+
+
+                                    <option
+                                        value="Shortlisted"
+                                        ${
+                                          applicant.status === "Shortlisted"
+                                            ? "selected"
+                                            : ""
+                                        }
+                                    >
+
+                                        Shortlisted
+
+                                    </option>
+
+
+                                    <option
+                                        value="Rejected"
+                                        ${
+                                          applicant.status === "Rejected"
+                                            ? "selected"
+                                            : ""
+                                        }
+                                    >
+
+                                        Rejected
+
+                                    </option>
+
+
+                                    <option
+                                        value="Selected"
+                                        ${
+                                          applicant.status === "Selected"
+                                            ? "selected"
+                                            : ""
+                                        }
+                                    >
+
+                                        Selected
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="applicant-actions">
+
+                                <button
+                                    class="view-profile-btn"
+                                    onclick="viewApplicant(
+                                        ${applicant.application_id}
+                                    )"
+                                >
+
+                                    View Profile
+
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                    `;
+            })
+            .join("");
+        } catch (error) {
+          console.log("Applicants loading error:", error);
+
+          applicantsList.innerHTML = `
+
+            <div class="applicants-error">
+
+                <div class="empty-icon">
+
+                    ⚠️
+
+                </div>
+
+
+                <h2>
+
+                    Unable to Load Applicants
+
+                </h2>
+
+
+                <p>
+
+                    Please make sure the
+                    CampusHire backend server
+                    is running.
+
+                </p>
+
+            </div>
+
+        `;
+        }
+      }
+
+      // =========================================
+      // UPDATE APPLICATION STATUS
+      // =========================================
+
+      async function updateApplicationStatus(applicationId, newStatus) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/applications/${applicationId}/status`,
+            {
+              method: "PUT",
+
+              headers: {
+                "Content-Type": "application/json",
+              },
+
+              body: JSON.stringify({
+                status: newStatus,
+              }),
+            },
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || "Unable to update status.");
+          }
+
+          alert("Application status updated successfully!");
+
+          // Reload applicants
+          loadApplicants();
+        } catch (error) {
+          console.log("Status update error:", error);
+
+          alert(error.message);
+        }
+      }
+
+      // =========================================
+      // VIEW APPLICANT
+      // =========================================
+
+        function viewApplicant(applicationId) {
+
+            window.location.href =
+                `applicant-profile.html?applicationId=${applicationId}`;
+
+        }
+
+      // =========================================
+      // INITIAL LOAD
+      // =========================================
+
+      loadApplicants();
+
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          localStorage.removeItem("user");
+
+          window.location.href = "login.html";
+        });
+    </script>
+  </body>
+</html>

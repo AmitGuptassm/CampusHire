@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Applicant Profile | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="applicant-profile-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="recruiter-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="post-job.html">
+                ➕ Post a Job
+            </a>
+
+            <a href="manage-jobs.html">
+                💼 Manage Jobs
+            </a>
+
+            <a
+                href="manage-applicants.html"
+                class="active"
+            >
+                👥 View Applicants
+            </a>
+
+            <a href="company-profile.html">
+                🏢 Company Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a
+                href="login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="applicant-profile-main">
+
+
+        <!-- BACK BUTTON -->
+
+        <a
+            href="manage-applicants.html"
+            class="back-button"
+        >
+            ← Back to Applicants
+        </a>
+
+
+        <!-- PROFILE HEADER -->
+
+        <section
+            class="applicant-profile-header"
+            id="applicantProfileHeader"
+        >
+
+            Loading applicant profile...
+
+        </section>
+
+
+
+        <!-- PROFILE DETAILS -->
+
+        <section class="applicant-profile-details">
+
+
+            <!-- EDUCATION -->
+
+            <div class="profile-detail-card">
+
+                <h2>
+                    🎓 Education
+                </h2>
+
+                <div id="educationDetails">
+
+                    Loading...
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SKILLS -->
+
+            <div class="profile-detail-card">
+
+                <h2>
+                    🛠 Skills
+                </h2>
+
+                <div id="skillsDetails">
+
+                    Loading...
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RESUME -->
+
+            <div class="profile-detail-card">
+
+                <h2>
+                    📄 Resume
+                </h2>
+
+                <div id="resumeDetails">
+
+                    Loading...
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        if (
+            user &&
+            user.role !== "recruiter"
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+
+        // =========================================
+        // GET APPLICATION ID
+        // =========================================
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const applicationId =
+            params.get(
+                "applicationId"
+            );
+
+
+
+        // =========================================
+        // LOAD APPLICANT PROFILE
+        // =========================================
+
+        async function loadApplicantProfile() {
+
+            if (!applicationId) {
+
+                alert(
+                    "Applicant not found."
+                );
+
+
+                window.location.href =
+                    "manage-applicants.html";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/applications/${applicationId}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load applicant profile."
+                    );
+
+                }
+
+
+                const applicant =
+                    data.applicant;
+
+
+                displayApplicantProfile(
+                    applicant
+                );
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Applicant profile error:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "applicantProfileHeader"
+                ).innerHTML = `
+
+                    <h2>
+                        Unable to load applicant profile
+                    </h2>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // DISPLAY PROFILE
+        // =========================================
+
+        function displayApplicantProfile(
+            applicant
+        ) {
+
+            document.getElementById(
+                "applicantProfileHeader"
+            ).innerHTML = `
+
+                <div class="profile-avatar">
+
+                    ${applicant.full_name
+                        .charAt(0)
+                        .toUpperCase()}
+
+                </div>
+
+
+                <div class="profile-main-info">
+
+                    <h1>
+                        ${applicant.full_name}
+                    </h1>
+
+
+                    <p>
+                        📧 ${applicant.email}
+                    </p>
+
+
+                    <p>
+                        📱 ${applicant.phone || "Not provided"}
+                    </p>
+
+
+                    <p>
+                        💼 Applied for:
+                        <strong>
+                            ${applicant.job_title}
+                        </strong>
+                    </p>
+
+                </div>
+
+            `;
+
+
+            document.getElementById(
+                "educationDetails"
+            ).innerHTML = `
+
+                <p>
+
+                    <strong>College:</strong>
+                    ${applicant.college || "Not provided"}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Course:</strong>
+                    ${applicant.course || "Not provided"}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Graduation Year:</strong>
+                    ${applicant.graduation_year || "Not provided"}
+
+                </p>
+
+
+                <p>
+
+                    <strong>CGPA:</strong>
+                    ${applicant.cgpa || "Not provided"}
+
+                </p>
+
+            `;
+
+
+            document.getElementById(
+                "skillsDetails"
+            ).innerHTML = `
+
+                <p>
+                    ${applicant.skills || "No skills added"}
+                </p>
+
+            `;
+
+
+            document.getElementById(
+                "resumeDetails"
+            ).innerHTML = `
+
+                ${
+                    applicant.resume
+                        ? `
+                            <a
+                                href="http://localhost:3000/uploads/${applicant.resume}"
+                                target="_blank"
+                                class="resume-view-btn"
+                            >
+                                📄 View Resume
+                            </a>
+                        `
+                        : `
+                            <p>
+                                Resume not uploaded.
+                            </p>
+                        `
+                }
+
+            `;
+
+        }
+
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        loadApplicantProfile();
+
+
+    </script>
+
+
+</body>
+
+</html>

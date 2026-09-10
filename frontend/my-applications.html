@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications | CampusHire</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body class="applications-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                👨‍🎓
+            </div>
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Student
+                </h3>
+
+                <p>
+                    Student
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="jobs.html">
+                💼 Find Jobs
+            </a>
+
+            <a href="my-applications.html"
+               class="active">
+                📋 My Applications
+            </a>
+
+            <a href="saved-jobs.html">
+                ⭐ Saved Jobs
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a href="#"
+               id="logoutBtn">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="applications-main">
+
+
+        <!-- HEADER -->
+
+        <header class="applications-header">
+
+            <div>
+
+                <p class="dashboard-label">
+                    APPLICATIONS
+                </p>
+
+                <h1>
+                    My Applications
+                </h1>
+
+                <p>
+                    Track the jobs you have applied for
+                    and monitor your application status.
+                </p>
+
+            </div>
+
+
+            <a
+                href="jobs.html"
+                class="browse-jobs-btn">
+
+                Browse Jobs
+
+            </a>
+
+        </header>
+
+
+
+        <!-- =========================
+             APPLICATION SUMMARY
+        ========================== -->
+
+        <div class="application-summary">
+
+
+            <div class="summary-box">
+
+                <span class="summary-icon">
+                    📋
+                </span>
+
+                <div>
+
+                    <h3 id="totalApplications">
+                        0
+                    </h3>
+
+                    <p>
+                        Total Applications
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span class="summary-icon">
+                    🟡
+                </span>
+
+                <div>
+
+                    <h3 id="pendingApplications">
+                        0
+                    </h3>
+
+                    <p>
+                        Pending
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span class="summary-icon">
+                    🟢
+                </span>
+
+                <div>
+
+                    <h3 id="shortlistedApplications">
+                        0
+                    </h3>
+
+                    <p>
+                        Shortlisted
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span class="summary-icon">
+                    ⭐
+                </span>
+
+                <div>
+
+                    <h3 id="selectedApplications">
+                        0
+                    </h3>
+
+                    <p>
+                        Selected
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             APPLICATION LIST
+        ========================== -->
+
+        <section class="applications-section">
+
+            <div class="applications-section-header">
+
+                <div>
+
+                    <h2>
+                        Application History
+                    </h2>
+
+                    <p>
+                        Your recently submitted applications
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="applicationsList"
+                class="applications-list">
+
+                <div class="applications-loading">
+
+                    <p>
+                        Loading applications...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        // =========================================
+        // CHECK STUDENT
+        // =========================================
+
+        if (user && user.role !== "student") {
+
+            alert(
+                "Only students can access this page."
+            );
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+
+        // =========================================
+        // DISPLAY USER NAME
+        // =========================================
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+
+        // =========================================
+        // LOAD APPLICATIONS
+        // =========================================
+
+        async function loadApplications() {
+
+            const applicationsList =
+                document.getElementById(
+                    "applicationsList"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/applications/student/${user.id}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load applications."
+                    );
+
+                }
+
+
+                const applications =
+                    data.applications || [];
+
+
+                updateSummary(
+                    applications
+                );
+
+
+                displayApplications(
+                    applications
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Applications error:",
+                    error
+                );
+
+
+                applicationsList.innerHTML = `
+
+                    <div class="applications-empty">
+
+                        <div class="empty-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>
+                            Unable to load applications
+                        </h3>
+
+                        <p>
+                            Please make sure the CampusHire
+                            backend server is running.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // UPDATE SUMMARY
+        // =========================================
+
+        function updateSummary(applications) {
+
+            const total =
+                applications.length;
+
+
+            const pending =
+                applications.filter(
+                    app =>
+                        app.status === "Pending"
+                ).length;
+
+
+            const shortlisted =
+                applications.filter(
+                    app =>
+                        app.status === "Shortlisted"
+                ).length;
+
+
+            const selected =
+                applications.filter(
+                    app =>
+                        app.status === "Selected"
+                ).length;
+
+
+            document.getElementById(
+                "totalApplications"
+            ).textContent =
+                total;
+
+
+            document.getElementById(
+                "pendingApplications"
+            ).textContent =
+                pending;
+
+
+            document.getElementById(
+                "shortlistedApplications"
+            ).textContent =
+                shortlisted;
+
+
+            document.getElementById(
+                "selectedApplications"
+            ).textContent =
+                selected;
+
+        }
+
+
+
+        // =========================================
+        // DISPLAY APPLICATIONS
+        // =========================================
+
+        function displayApplications(
+            applications
+        ) {
+
+            const applicationsList =
+                document.getElementById(
+                    "applicationsList"
+                );
+
+
+            applicationsList.innerHTML = "";
+
+
+            // No applications
+
+            if (applications.length === 0) {
+
+                applicationsList.innerHTML = `
+
+                    <div class="applications-empty">
+
+                        <div class="empty-icon">
+                            📋
+                        </div>
+
+                        <h3>
+                            No Applications Yet
+                        </h3>
+
+                        <p>
+                            You haven't applied for any jobs yet.
+                        </p>
+
+                        <a
+                            href="jobs.html"
+                            class="browse-jobs-btn">
+
+                            Browse Jobs
+
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            // Create application cards
+
+            applications.forEach(
+                application => {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "application-card";
+
+
+                    const status =
+                        application.status ||
+                        "Pending";
+
+
+                    // Company name fix
+
+                    const companyName =
+                        application.company_name ||
+                        "Company";
+
+
+                    const statusClass =
+                        status
+                        .toLowerCase()
+                        .replace(
+                            " ",
+                            "-"
+                        );
+
+
+                    card.innerHTML = `
+
+                        <div class="application-company-logo">
+
+                            ${companyName
+                                .substring(0, 4)
+                                .toUpperCase()}
+
+                        </div>
+
+
+                        <div class="application-details">
+
+                            <h3>
+
+                                ${application.title}
+
+                            </h3>
+
+
+                            <p class="application-company">
+
+                                ${companyName}
+
+                            </p>
+
+
+                            <div class="application-meta">
+
+                                <span>
+                                    📍 ${
+                                        application.location ||
+                                        "Not specified"
+                                    }
+                                </span>
+
+                                <span>
+                                    💼 ${
+                                        application.job_type ||
+                                        "Not specified"
+                                    }
+                                </span>
+
+                                <span>
+                                    💰 ${
+                                        application.salary ||
+                                        "Not specified"
+                                    }
+                                </span>
+
+                            </div>
+
+
+                            <p class="applied-date">
+
+                                Applied on:
+                                ${formatDate(
+                                    application.applied_at
+                                )}
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="application-status">
+
+                            <span
+                                class="status-badge ${statusClass}">
+
+                                ${status}
+
+                            </span>
+
+
+                            <a
+                                href="job-details.html?id=${application.job_id}"
+                                class="application-view-btn">
+
+                                View Job
+
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    applicationsList.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        // =========================================
+        // FORMAT DATE
+        // =========================================
+
+        function formatDate(dateString) {
+
+            if (!dateString) {
+
+                return "Not available";
+
+            }
+
+
+            const date =
+                new Date(dateString);
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        loadApplications();
+
+    </script>
+
+
+</body>
+
+</html>

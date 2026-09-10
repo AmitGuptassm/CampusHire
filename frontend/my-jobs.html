@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Posted Jobs | CampusHire</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="my-jobs-page">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎓 CampusHire
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                💼
+            </div>
+
+            <div>
+
+                <h3 id="sidebarName">
+                    Recruiter
+                </h3>
+
+                <p>
+                    Recruiter
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <a href="recruiter-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="post-job.html">
+                ➕ Post a Job
+            </a>
+
+            <a
+                href="my-jobs.html"
+                class="active"
+            >
+                💼 My Posted Jobs
+            </a>
+
+            <a href="applicants.html">
+                📋 Applicants
+            </a>
+
+        </nav>
+
+
+        <!-- BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                🏠 Back to Website
+            </a>
+
+            <a
+                href="login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="my-jobs-main">
+
+
+        <!-- HEADER -->
+
+        <header class="my-jobs-header">
+
+            <div>
+
+                <p class="dashboard-label">
+                    JOB MANAGEMENT
+                </p>
+
+                <h1>
+                    My Posted Jobs
+                </h1>
+
+                <p>
+                    View and manage the jobs you
+                    have posted on CampusHire.
+                </p>
+
+            </div>
+
+
+            <a
+                href="post-job.html"
+                class="dashboard-primary-btn"
+            >
+                + Post New Job
+            </a>
+
+        </header>
+
+
+
+        <!-- =========================
+             SUMMARY
+        ========================== -->
+
+        <section class="my-jobs-summary">
+
+            <div class="my-job-stat">
+
+                <span>
+                    💼
+                </span>
+
+                <div>
+
+                    <h2 id="totalPostedJobs">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Jobs
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="my-job-stat">
+
+                <span>
+                    📋
+                </span>
+
+                <div>
+
+                    <h2 id="totalJobApplicants">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Applicants
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="my-job-stat">
+
+                <span>
+                    ⏳
+                </span>
+
+                <div>
+
+                    <h2 id="activeJobs">
+                        0
+                    </h2>
+
+                    <p>
+                        Active Jobs
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             JOBS LIST
+        ========================== -->
+
+        <section class="my-jobs-section">
+
+
+            <div class="my-jobs-section-header">
+
+                <div>
+
+                    <h2>
+                        Your Job Postings
+                    </h2>
+
+                    <p>
+                        Manage your job opportunities
+                        and review applicants.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="myJobsList"
+                class="my-jobs-list"
+            >
+
+                <p class="my-jobs-loading">
+                    Loading your jobs...
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        // =========================================
+        // CHECK LOGIN
+        // =========================================
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        // =========================================
+        // CHECK RECRUITER ROLE
+        // =========================================
+
+        if (user && user.role !== "recruiter") {
+
+            alert(
+                "Only recruiters can access this page."
+            );
+
+            window.location.href =
+                "student-dashboard.html";
+
+        }
+
+
+        // =========================================
+        // DISPLAY NAME
+        // =========================================
+
+        document.getElementById(
+            "sidebarName"
+        ).textContent =
+            user.full_name;
+
+
+        // =========================================
+        // LOAD RECRUITER JOBS
+        // =========================================
+
+        async function loadMyJobs() {
+
+            const jobsList =
+                document.getElementById(
+                    "myJobsList"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:3000/api/recruiter/jobs/${user.id}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load jobs."
+                    );
+
+                }
+
+
+                const jobs =
+                    data.jobs || [];
+
+
+                displayJobs(
+                    jobs
+                );
+
+
+                updateSummary(
+                    jobs
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "My jobs error:",
+                    error
+                );
+
+
+                jobsList.innerHTML = `
+
+                    <div class="my-jobs-empty">
+
+                        <div class="empty-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>
+                            Unable to load jobs
+                        </h3>
+
+                        <p>
+                            Please make sure the backend
+                            server is running.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // UPDATE SUMMARY
+        // =========================================
+
+        function updateSummary(jobs) {
+
+            document.getElementById(
+                "totalPostedJobs"
+            ).textContent =
+                jobs.length;
+
+
+            document.getElementById(
+                "activeJobs"
+            ).textContent =
+                jobs.length;
+
+
+            // Will become dynamic when
+            // applicant API is created
+
+            document.getElementById(
+                "totalJobApplicants"
+            ).textContent =
+                0;
+
+        }
+
+
+
+        // =========================================
+        // DISPLAY JOBS
+        // =========================================
+
+        function displayJobs(jobs) {
+
+            const jobsList =
+                document.getElementById(
+                    "myJobsList"
+                );
+
+
+            jobsList.innerHTML = "";
+
+
+            // No jobs
+
+            if (jobs.length === 0) {
+
+                jobsList.innerHTML = `
+
+                    <div class="my-jobs-empty">
+
+                        <div class="empty-icon">
+                            💼
+                        </div>
+
+                        <h3>
+                            No Jobs Posted Yet
+                        </h3>
+
+                        <p>
+                            Start by posting your first
+                            job opportunity.
+                        </p>
+
+                        <a
+                            href="post-job.html"
+                            class="dashboard-primary-btn"
+                        >
+                            + Post New Job
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            // Job cards
+
+            jobs.forEach(
+                job => {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "my-job-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="my-job-icon">
+
+                            💼
+
+                        </div>
+
+
+                        <div class="my-job-details">
+
+                            <h3>
+
+                                ${job.title}
+
+                            </h3>
+
+
+                            <div class="my-job-meta">
+
+                                <span>
+                                    📍 ${job.location}
+                                </span>
+
+                                <span>
+                                    🕒 ${job.job_type}
+                                </span>
+
+                                <span>
+                                    💰 ${job.salary}
+                                </span>
+
+                                <span>
+                                    👨‍💼 ${job.experience}
+                                </span>
+
+                            </div>
+
+
+                            <p class="my-job-skills">
+
+                                <strong>
+                                    Skills:
+                                </strong>
+
+                                ${job.skills}
+
+                            </p>
+
+
+                            <p class="my-job-deadline">
+
+                                📅 Deadline:
+                                <strong>
+
+                                    ${formatDate(
+                                        job.deadline
+                                    )}
+
+                                </strong>
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="my-job-actions">
+
+                            <span class="active-job-badge">
+
+                                Active
+
+                            </span>
+
+
+                            <a
+                                href="applicants.html?jobId=${job.id}"
+                                class="view-applicants-btn">
+                                View Applicants
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    jobsList.appendChild(
+                        card
+                    );
+
+                }
+
+            );
+
+        }
+
+
+
+        // =========================================
+        // FORMAT DATE
+        // =========================================
+
+        function formatDate(dateString) {
+
+            if (!dateString) {
+
+                return "Not specified";
+
+            }
+
+
+            const date =
+                new Date(
+                    dateString
+                );
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+
+                }
+            );
+
+        }
+
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        loadMyJobs();
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <body>
+    <nav class="navbar">
+      <div class="logo">🎓 CampusHire</div>
+    <ul class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./companies.html">Companies</a></li>
+        <li><a href="./jobs.html">Jobs</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+    </ul>
+        <div class="nav-buttons">
+        <a href="./login.html" class="login-btn">Login</a>
+        <a href="./register.html" class="register-btn">Register</a>
+    </div>
+</nav>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>Your Career <span>Starts Here</span></h1>
+
+        <p>
+            Connect with leading companies, explore placement opportunities,
+            and take the next step toward your dream career.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="./jobs.html" class="primary-btn">Explore Jobs</a>
+            <a href="./register.html" class="secondary-btn">Register Now</a>
+        </div>
+
+    </div>
+
+<div class="hero-slider">
+
+    <div class="slide active">
+        <img src="./IMAGES/accenture.webp" alt="Students Placement">
+        <div class="slide-content">
+            <h2>Building Future Leaders</h2>
+            <p>Empowering students to achieve their career goals.</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="./IMAGES/delloite.jpg" alt="Job Interview">
+        <div class="slide-content">
+            <h2>Connect With Top Companies</h2>
+            <p>Explore exciting opportunities from leading recruiters.</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="./IMAGES/wipro.jpg" alt="Career Opportunity">
+        <div class="slide-content">
+            <h2>Start Your Career</h2>
+            <p>Take the next step toward your dream career.</p>
+        </div>
+    </div>
+
+    <!-- Previous / Next buttons -->
+    <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
+
+    <!-- Dots -->
+    <div class="slider-dots">
+        <span class="dot active" onclick="currentSlide(0)"></span>
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+    </div>
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- About -->
+        <div class="footer-section">
+            <h2>🎓 CampusHire</h2>
+
+            <p>
+                Student Placement Management System
+            </p>
+
+            <p>
+                Connecting students with career opportunities
+                and leading recruiting companies.
+            </p>
+        </div>
+
+
+        <!-- Quick Links -->
+        <div class="footer-section">
+
+            <h3>Quick Links</h3>
+
+            <a href="./index.html">Home</a>
+            <a href="./about.html">About</a>
+            <a href="./companies.html">Companies</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="contact.html">Contact</a>
+
+        </div>
+
+
+        <!-- For Students -->
+        <div class="footer-section">
+
+            <h3>For Students</h3>
+
+            <a href="register.html">Register</a>
+            <a href="login.html">Login</a>
+            <a href="jobs.html">Browse Jobs</a>
+            <a href="my-applications.html">My Applications</a>
+
+        </div>
+
+
+        <!-- Contact -->
+        <div class="footer-section">
+
+            <h3>Contact Us</h3>
+
+            <p>📧 placement@campushire.com</p>
+
+            <p>📞 +91 7979736181</p>
+
+            <p>📍 Greater Noida, India</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bottom Footer -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CampusHire. All Rights Reserved.
+        </p>
+
+        <div class="footer-bottom-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>
